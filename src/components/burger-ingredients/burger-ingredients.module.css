@@ -1,0 +1,22 @@
+.wrapper {
+    max-width: 600px;
+}
+
+.ingredients {
+    max-height: 700px;
+    overflow-y: scroll;
+}
+
+.tab_section {
+    display: flex;
+}
+
+.ingredients_section {
+    display: grid;
+    grid-gap: 32px 24px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.ingredient_card {
+    text-align: center;
+}
