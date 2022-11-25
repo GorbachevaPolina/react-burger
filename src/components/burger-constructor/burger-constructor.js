@@ -3,7 +3,7 @@ import styles from './burger-constructor.module.css'
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 
 const BurgerConstructor = ({data}) => {
-    const total = data[0].price * 2 + data[5].price + data[4].price + data[7].price + 2 * data[8].price;
+    const total = data[0].price * 2 + data[5].price + 2* data[4].price + data[7].price + 2 * data[8].price + data[9].price;
 
     return (
         <section className={`${styles.wrapper} mt-25`}>
@@ -54,6 +54,22 @@ const BurgerConstructor = ({data}) => {
                             text={data[8].name}
                             price={data[8].price}
                             thumbnail={data[8].image}
+                        />
+                    </span>
+                    <span>
+                        <span className="mr-2"><DragIcon type="primary" /></span>
+                        <ConstructorElement
+                            text={data[4].name}
+                            price={data[4].price}
+                            thumbnail={data[4].image}
+                        />
+                    </span>
+                    <span>
+                        <span className="mr-2"><DragIcon type="primary" /></span>
+                        <ConstructorElement
+                            text={data[9].name}
+                            price={data[9].price}
+                            thumbnail={data[9].image}
                         />
                     </span>
                     

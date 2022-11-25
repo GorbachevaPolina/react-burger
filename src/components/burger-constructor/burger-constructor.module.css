@@ -4,6 +4,7 @@
 }
 
 .varied_ingredients {
+    max-height: 500px;
     overflow-y: scroll;
 }
 
