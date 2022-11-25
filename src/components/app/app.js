@@ -10,9 +10,9 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <div style={{display: 'flex'}}>
+      <div style={{display: 'flex', gap: 40, justifyContent: "center"}}>
       <BurgerIngredients data={data}/>
-      <BurgerConstructor />
+      <BurgerConstructor data={data}/>
       </div>
     </div>
   );

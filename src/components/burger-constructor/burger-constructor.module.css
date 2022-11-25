@@ -1,0 +1,14 @@
+.wrapper {
+    width: 600px;
+    max-width: 600px;
+}
+
+.varied_ingredients {
+    overflow-y: scroll;
+}
+
+.checkout {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}

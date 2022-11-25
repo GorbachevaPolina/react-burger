@@ -27,7 +27,7 @@ const BurgerIngredients = ({data}) => {
                         data.map((item) => {
                             if (item.type === 'bun') {
                                 return (
-                                    <div className={styles.ingredient_card}>
+                                    <div className={styles.ingredient_card} key={item._id}>
                                         <img src={item.image} className="ml-4 mr-4 mb-1"/>
                                         <p className="text text_type_digits-default mb-1">
                                             {item.price}
@@ -48,7 +48,7 @@ const BurgerIngredients = ({data}) => {
                         data.map((item) => {
                             if (item.type === 'sauce') {
                                 return (
-                                    <div className={styles.ingredient_card}>
+                                    <div className={styles.ingredient_card} key={item._id}>
                                         <img src={item.image} className="ml-4 mr-4 mb-1"/>
                                         <p className="text text_type_digits-default mb-1">
                                             {item.price}
@@ -69,7 +69,7 @@ const BurgerIngredients = ({data}) => {
                         data.map((item) => {
                             if (item.type === 'main') {
                                 return (
-                                    <div className={styles.ingredient_card}>
+                                    <div className={styles.ingredient_card} key={item._id}>
                                         <img src={item.image} className="ml-4 mr-4 mb-1"/>
                                         <p className="text text_type_digits-default mb-1">
                                             {item.price}
