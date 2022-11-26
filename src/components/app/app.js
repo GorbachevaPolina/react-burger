@@ -10,10 +10,10 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <div style={{display: 'flex', gap: 40, justifyContent: "center"}}>
-      <BurgerIngredients data={data}/>
-      <BurgerConstructor data={data}/>
-      </div>
+      <main style={{display: 'flex', gap: 40, justifyContent: "center"}}>
+        <BurgerIngredients data={data}/>
+        <BurgerConstructor data={data}/>
+      </main>
     </div>
   );
 }
