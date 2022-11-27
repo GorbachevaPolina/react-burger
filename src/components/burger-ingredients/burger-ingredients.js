@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import PropTypes from 'prop-types'
 import {Tab, CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
@@ -6,10 +6,24 @@ import dataShape from "../../utils/types";
 
 const BurgerIngredients = ({data}) => {
     const [current, setCurrent] = useState('bun');
+    const bunRef = useRef();
+    const sauceRef = useRef();
+    const mainRef = useRef();
 
     const scrollToTab = (e) => {
         setCurrent(e);
-        document.getElementById(e).scrollIntoView();
+        switch(e) {
+            case 'bun':
+                bunRef.current.scrollIntoView({behavior: "smooth"});
+                break;
+            case 'sauce':
+                sauceRef.current.scrollIntoView({behavior: "smooth"});
+                break;
+            case 'main':
+                mainRef.current.scrollIntoView({behavior: "smooth"});
+                break;
+        }
+
     }
     
     return (
@@ -27,7 +41,7 @@ const BurgerIngredients = ({data}) => {
                 </Tab>
             </div>
             <ul className={`${styles.ingredients} custom-scroll`}>
-                <li id="bun">
+                <li id="bun" ref={bunRef}>
                     <p className="text text_type_main-medium mb-6">Булки</p>
                     <ul className={`${styles.ingredients_section} ml-4 mb-10`}>
                         {
@@ -49,7 +63,7 @@ const BurgerIngredients = ({data}) => {
                         }
                     </ul>
                 </li>
-                <li id="sauce">
+                <li id="sauce" ref={sauceRef}>
                     <p className="text text_type_main-medium mb-6">Соусы</p>
                     <ul className={`${styles.ingredients_section} ml-4 mb-10`}>
                         {
@@ -71,7 +85,7 @@ const BurgerIngredients = ({data}) => {
                         }
                     </ul>
                 </li>
-                <li id="main">
+                <li id="main" ref={mainRef}>
                     <p className="text text_type_main-medium mb-6">Начинка</p>
                     <ul className={`${styles.ingredients_section} ml-4 mb-10`}>
                         {
