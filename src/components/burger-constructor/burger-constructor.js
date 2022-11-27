@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import dataShape from "../../utils/types";
 
 const BurgerConstructor = ({data}) => {
-    const total = data[0].price * 2 + data[5].price + 2* data[4].price + data[7].price + 2 * data[8].price + data[9].price;
+    const total = data.reduce((prev, curr) => prev + curr.price, 0);
 
-    return (
-        <section className={`${styles.wrapper} mt-25 mb-10`}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} className="ml-4">
+    return ( 
+        <section className={`${styles.wrapper} mt-25 mb-10 pl-4`}>
                 <span className="ml-8"><ConstructorElement
                     type="top"
                     isLocked={true}
@@ -16,64 +16,22 @@ const BurgerConstructor = ({data}) => {
                     price={data[0].price}
                     thumbnail={data[0].image}
                 /></span>
-                <ul className={`${styles.varied_ingredients} custom-scroll`} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    <li>
-                        <span className="mr-2"><DragIcon type="primary" /></span>
-                        <ConstructorElement
-                            text={data[5].name}
-                            price={data[5].price}
-                            thumbnail={data[5].image}
-                        />
-                    </li>
-                    <li>
-                        <span className="mr-2"><DragIcon type="primary" /></span>
-                        <ConstructorElement
-                            text={data[4].name}
-                            price={data[4].price}
-                            thumbnail={data[4].image}
-                        />
-                    </li>
-                    <li>
-                        <span className="mr-2"><DragIcon type="primary" /></span>
-                        <ConstructorElement
-                            text={data[7].name}
-                            price={data[7].price}
-                            thumbnail={data[7].image}
-                        />
-                    </li>
-                    <li>
-                        <span className="mr-2"><DragIcon type="primary" /></span>
-                        <ConstructorElement
-                            text={data[8].name}
-                            price={data[8].price}
-                            thumbnail={data[8].image}
-                        />
-                    </li>
-                    <li>
-                        <span className="mr-2"><DragIcon type="primary" /></span>
-                        <ConstructorElement
-                            text={data[8].name}
-                            price={data[8].price}
-                            thumbnail={data[8].image}
-                        />
-                    </li>
-                    <li>
-                        <span className="mr-2"><DragIcon type="primary" /></span>
-                        <ConstructorElement
-                            text={data[4].name}
-                            price={data[4].price}
-                            thumbnail={data[4].image}
-                        />
-                    </li>
-                    <li>
-                        <span className="mr-2"><DragIcon type="primary" /></span>
-                        <ConstructorElement
-                            text={data[9].name}
-                            price={data[9].price}
-                            thumbnail={data[9].image}
-                        />
-                    </li>
-                    
+                <ul className={`${styles.varied_ingredients} custom-scroll`}>
+                    {
+                        data.slice(1).map((item, index) => {
+                            return (
+                                <li key={index}>
+                                    <span className="mr-2"><DragIcon type="primary" /></span>
+                                    <ConstructorElement
+                                        text={item.name}
+                                        price={item.price}
+                                        thumbnail={item.image}
+                                    />
+                                </li>
+                            )
+                            
+                        })
+                    }
                 </ul>
                 <span className="ml-8">
                 <ConstructorElement
@@ -91,28 +49,12 @@ const BurgerConstructor = ({data}) => {
                     </p>
                     <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
                 </div>
-            </div>
         </section>
     )
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(
-        PropTypes.shape({
-                _id: PropTypes.string.isRequired,
-                name: PropTypes.string.isRequired,
-                type: PropTypes.string.isRequired,
-                proteins: PropTypes.number.isRequired,
-                fat: PropTypes.number.isRequired,
-                carbohydrates: PropTypes.number.isRequired,
-                calories: PropTypes.number.isRequired,
-                price: PropTypes.number.isRequired,
-                image: PropTypes.string.isRequired,
-                image_mobile: PropTypes.string,
-                image_large: PropTypes.string,
-                __v: PropTypes.number.isRequired
-        })
-    ).isRequired
+    data: PropTypes.arrayOf(dataShape).isRequired
 }
 
 export default BurgerConstructor;

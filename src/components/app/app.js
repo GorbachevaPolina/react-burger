@@ -4,17 +4,19 @@ import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-import data from '../../utils/data'
+import {data, chosenIngredients} from '../../utils/data'
 
 function App() {
   return (
-    <div className="App">
-      <AppHeader />
-      <main style={{display: 'flex', gap: 40, justifyContent: "center"}}>
+    <>
+      <header>
+        <AppHeader />
+      </header>
+      <main className={styles.main}>
         <BurgerIngredients data={data}/>
-        <BurgerConstructor data={data}/>
+        <BurgerConstructor data={chosenIngredients}/>
       </main>
-    </div>
+    </>
   );
 }
 

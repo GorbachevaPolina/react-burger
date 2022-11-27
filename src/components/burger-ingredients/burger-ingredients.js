@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import PropTypes from 'prop-types'
 import {Tab, CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
+import dataShape from "../../utils/types";
 
 const BurgerIngredients = ({data}) => {
     const [current, setCurrent] = useState('bun');
@@ -35,10 +36,10 @@ const BurgerIngredients = ({data}) => {
                                     return (
                                         <li className={styles.ingredient_card} key={item._id}>
                                             <Counter count={1} size="default" extraClass="m-1" />
-                                            <img src={item.image} className="ml-4 mr-4 mb-1"/>
+                                            <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
                                             <p className="text text_type_digits-default mb-1">
                                                 {item.price}
-                                                <span className="ml-1" style={{verticalAlign: "middle"}}><CurrencyIcon type="primary"/></span>
+                                                <span className={`${styles.card_icon} ml-1`}><CurrencyIcon type="primary"/></span>
                                             </p>
                                             <p className="text text_type_main-small">{item.name}</p>
                                         </li>
@@ -57,10 +58,10 @@ const BurgerIngredients = ({data}) => {
                                     return (
                                         <li className={styles.ingredient_card} key={item._id}>
                                             <Counter count={1} size="default" extraClass="m-1" />
-                                            <img src={item.image} className="ml-4 mr-4 mb-1"/>
+                                            <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
                                             <p className="text text_type_digits-default mb-1">
                                                 {item.price}
-                                                <span className="ml-1" style={{verticalAlign: "middle"}}><CurrencyIcon type="primary"/></span>
+                                                <span className={`${styles.card_icon} ml-1`}><CurrencyIcon type="primary"/></span>
                                             </p>                                        
                                             <p className="text text_type_main-small">{item.name}</p>
                                         </li>
@@ -79,10 +80,10 @@ const BurgerIngredients = ({data}) => {
                                     return (
                                         <li className={styles.ingredient_card} key={item._id}>
                                             <Counter count={1} size="default" extraClass="m-1" />
-                                            <img src={item.image} className="ml-4 mr-4 mb-1"/>
+                                            <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
                                             <p className="text text_type_digits-default mb-1">
                                                 {item.price}
-                                                <span className="ml-1" style={{verticalAlign: "middle"}}><CurrencyIcon type="primary"/></span>
+                                                <span className={`${styles.card_icon} ml-1`}><CurrencyIcon type="primary"/></span>
                                             </p>                                        
                                             <p className="text text_type_main-small">{item.name}</p>
                                         </li>
@@ -98,22 +99,7 @@ const BurgerIngredients = ({data}) => {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(
-        PropTypes.shape({
-                _id: PropTypes.string.isRequired,
-                name: PropTypes.string.isRequired,
-                type: PropTypes.string.isRequired,
-                proteins: PropTypes.number.isRequired,
-                fat: PropTypes.number.isRequired,
-                carbohydrates: PropTypes.number.isRequired,
-                calories: PropTypes.number.isRequired,
-                price: PropTypes.number.isRequired,
-                image: PropTypes.string.isRequired,
-                image_mobile: PropTypes.string,
-                image_large: PropTypes.string,
-                __v: PropTypes.number.isRequired
-        })
-    ).isRequired
+    data: PropTypes.arrayOf(dataShape).isRequired 
 }
 
 export default BurgerIngredients;
