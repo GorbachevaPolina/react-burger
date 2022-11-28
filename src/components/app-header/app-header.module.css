@@ -1,0 +1,26 @@
+nav {
+    max-width: 1400px;
+    margin: auto;
+}
+
+.list {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0
+}
+
+.list_item {
+    flex-grow: 1;
+}
+
+.list_item a {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav_left {
+    display: flex;
+}
