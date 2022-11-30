@@ -30,3 +30,9 @@
 .card_icon {
     vertical-align: middle
 }
+
+.modal_info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}

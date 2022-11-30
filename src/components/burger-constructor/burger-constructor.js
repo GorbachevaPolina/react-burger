@@ -6,7 +6,6 @@ import dataShape from "../../utils/types";
 
 const BurgerConstructor = ({data}) => {
     const total = data.reduce((prev, curr) => prev + curr.price, 0);
-
     return ( 
         <section className={`${styles.wrapper} mt-25 mb-10 pl-4`}>
                 <span className="ml-8"><ConstructorElement
@@ -18,7 +17,7 @@ const BurgerConstructor = ({data}) => {
                 /></span>
                 <ul className={`${styles.varied_ingredients} custom-scroll`}>
                     {
-                        data.slice(1).map((item, index) => {
+                        data.slice(2).map((item, index) => {
                             return (
                                 <li key={index}>
                                     <span className="mr-2"><DragIcon type="primary" /></span>
