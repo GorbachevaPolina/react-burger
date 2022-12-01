@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {Tab, CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
 import dataShape from "../../utils/types";
-import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const BurgerIngredients = ({data}) => {
     const [current, setCurrent] = useState('bun');
@@ -35,7 +35,6 @@ const BurgerIngredients = ({data}) => {
     }
 
     const handleCloseModal = () => {
-        console.log('hi')
         setIsModalOpen(false)
     }
     
@@ -83,7 +82,7 @@ const BurgerIngredients = ({data}) => {
                             data.map((item) => {
                                 if (item.type === 'sauce') {
                                     return (
-                                        <li className={styles.ingredient_card} key={item._id}>
+                                        <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)}>
                                             <Counter count={1} size="default" extraClass="m-1" />
                                             <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
                                             <p className="text text_type_digits-default mb-1">
@@ -105,7 +104,7 @@ const BurgerIngredients = ({data}) => {
                             data.map((item) => {
                                 if (item.type === 'main') {
                                     return (
-                                        <li className={styles.ingredient_card} key={item._id}>
+                                        <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)}>
                                             <Counter count={1} size="default" extraClass="m-1" />
                                             <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
                                             <p className="text text_type_digits-default mb-1">
@@ -121,28 +120,7 @@ const BurgerIngredients = ({data}) => {
                     </ul>
                 </li>
             </ul>
-            {isModalOpen && <Modal header="Детали ингредента" onClose={handleCloseModal}>
-                <img src={modalData.image_large} alt={modalData.name}/>
-                <p className="text text_type_main-medium mt-4 mb-8">{modalData.name}</p>
-                <div className={styles.modal_info}>
-                    <div>
-                        <p className="text text_type_main-small text_color_inactive">Калории, ккал</p>
-                        <p className="text text_type_digits-default text_color_inactive">{modalData.calories}</p>
-                    </div>
-                    <div>
-                        <p className="text text_type_main-small text_color_inactive">Белки, г</p>
-                        <p className="text text_type_digits-default text_color_inactive">{modalData.proteins}</p>
-                    </div>
-                    <div>
-                        <p className="text text_type_main-small text_color_inactive">Жиры, г</p>
-                        <p className="text text_type_digits-default text_color_inactive">{modalData.fat}</p>
-                    </div>
-                    <div>
-                        <p className="text text_type_main-small text_color_inactive">Углеводы, г</p>
-                        <p className="text text_type_digits-default text_color_inactive">{modalData.carbohydrates}</p>
-                    </div>
-                </div>
-            </Modal>}
+            {isModalOpen && <IngredientDetails onClose={handleCloseModal} data={modalData}/>}
         </section>
     )
 }
