@@ -1,5 +1,6 @@
 import React from 'react'
 import Modal from '../modal/modal'
+import PropTypes from 'prop-types'
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 const OrderDetails = ({onClose}) => {
@@ -12,6 +13,10 @@ const OrderDetails = ({onClose}) => {
             <p className="text text_type_main-small text_color_inactive mb-10">Дождитесь готовности на орбитальной станции</p>
         </Modal>
     )
+}
+
+OrderDetails.propTypes = {
+    onClose: PropTypes.func.isRequired
 }
 
 export default OrderDetails

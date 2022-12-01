@@ -1,6 +1,8 @@
 import React from 'react'
 import Modal from '../modal/modal'
 import styles from './ingredient-details.module.css'
+import PropTypes from 'prop-types'
+import dataShape from '../../utils/types'
 
 const IngredientDetails = ({onClose, data}) => {
     return (
@@ -27,6 +29,11 @@ const IngredientDetails = ({onClose, data}) => {
                 </div>
         </Modal>
     )
+}
+
+IngredientDetails.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    data: dataShape.isRequired
 }
 
 export default IngredientDetails
