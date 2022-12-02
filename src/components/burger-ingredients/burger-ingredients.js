@@ -4,6 +4,7 @@ import {Tab, CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-u
 import styles from './burger-ingredients.module.css'
 import dataShape from "../../utils/types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 
 const BurgerIngredients = ({data}) => {
     const [current, setCurrent] = useState('bun');
@@ -120,7 +121,9 @@ const BurgerIngredients = ({data}) => {
                     </ul>
                 </li>
             </ul>
-            {isModalOpen && <IngredientDetails onClose={handleCloseModal} data={modalData}/>}
+            {isModalOpen && <Modal header={'Детали ингредиента'} onClose={handleCloseModal}>
+                <IngredientDetails data={modalData}/>
+            </Modal>}
         </section>
     )
 }

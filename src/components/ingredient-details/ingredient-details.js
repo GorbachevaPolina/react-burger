@@ -1,12 +1,11 @@
 import React from 'react'
-import Modal from '../modal/modal'
 import styles from './ingredient-details.module.css'
 import PropTypes from 'prop-types'
 import dataShape from '../../utils/types'
 
-const IngredientDetails = ({onClose, data}) => {
+const IngredientDetails = ({data}) => {
     return (
-        <Modal header="Детали ингредента" onClose={onClose}>
+        <>
                 <img src={data.image_large} alt={data.name} />
                 <p className="text text_type_main-medium mt-4 mb-8">{data.name}</p>
                 <div className={`${styles.modal_info} mb-15`}>
@@ -27,12 +26,11 @@ const IngredientDetails = ({onClose, data}) => {
                         <p className="text text_type_digits-default text_color_inactive">{data.carbohydrates}</p>
                     </div>
                 </div>
-        </Modal>
+        </>
     )
 }
 
 IngredientDetails.propTypes = {
-    onClose: PropTypes.func.isRequired,
     data: dataShape.isRequired
 }
 

@@ -13,16 +13,23 @@ function App() {
   const [error, setError] = useState(null);
 
   const getData = async () => {
-    try {
-      setIsLoading(true)
-      let response = await fetch(URL);
-      let parseRes = await response.json();
-      setData(parseRes.data)
-      setIsLoading(false)
-    } catch (error) {
-      setError(error.message)
-      setIsLoading(false)
-    }
+    setIsLoading(true)
+    fetch(URL)
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        } 
+        return Promise.reject(`Ошибка ${response.status}`)
+      })
+      .then((result) => {
+        setData(result.data)
+      })
+      .catch((error) => {
+        setError(error.message)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   useEffect(() => {
