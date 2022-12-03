@@ -1,12 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import dataShape from "../../utils/types";
+import OrderDetails from "../order-details/order-details";
+import Modal from "../modal/modal";
 
 const BurgerConstructor = ({data}) => {
-    const total = data.reduce((prev, curr) => prev + curr.price, 0);
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
+    const handleOpenModal = () => {
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
+    }
+
+    const total = data.reduce((prev, curr) => prev + curr.price, 0);
+    
     return ( 
         <section className={`${styles.wrapper} mt-25 mb-10 pl-4`}>
                 <span className="ml-8"><ConstructorElement
@@ -18,7 +30,7 @@ const BurgerConstructor = ({data}) => {
                 /></span>
                 <ul className={`${styles.varied_ingredients} custom-scroll`}>
                     {
-                        data.slice(1).map((item, index) => {
+                        data.slice(2).map((item, index) => {
                             return (
                                 <li key={index}>
                                     <span className="mr-2"><DragIcon type="primary" /></span>
@@ -47,8 +59,11 @@ const BurgerConstructor = ({data}) => {
                         {total}
                         <span className="ml-1"><CurrencyIcon type="primary" /></span>
                     </p>
-                    <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
+                    <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>Оформить заказ</Button>
                 </div>
+                {isModalOpen && <Modal header={null} onClose={handleCloseModal}>
+                    <OrderDetails />
+                </Modal>}
         </section>
     )
 }

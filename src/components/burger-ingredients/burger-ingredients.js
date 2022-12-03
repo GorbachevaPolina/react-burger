@@ -3,9 +3,14 @@ import PropTypes from 'prop-types'
 import {Tab, CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
 import dataShape from "../../utils/types";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 
 const BurgerIngredients = ({data}) => {
     const [current, setCurrent] = useState('bun');
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [modalData, setModalData] = useState(null)
+
     const bunRef = useRef();
     const sauceRef = useRef();
     const mainRef = useRef();
@@ -23,7 +28,15 @@ const BurgerIngredients = ({data}) => {
                 mainRef.current.scrollIntoView({behavior: "smooth"});
                 break;
         }
+    }
 
+    const handleOpenModal = (item) => {
+        setModalData(item)
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
     }
     
     return (
@@ -48,7 +61,7 @@ const BurgerIngredients = ({data}) => {
                             data.map((item) => {
                                 if (item.type === 'bun') {
                                     return (
-                                        <li className={styles.ingredient_card} key={item._id}>
+                                        <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)}>
                                             <Counter count={1} size="default" extraClass="m-1" />
                                             <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
                                             <p className="text text_type_digits-default mb-1">
@@ -70,7 +83,7 @@ const BurgerIngredients = ({data}) => {
                             data.map((item) => {
                                 if (item.type === 'sauce') {
                                     return (
-                                        <li className={styles.ingredient_card} key={item._id}>
+                                        <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)}>
                                             <Counter count={1} size="default" extraClass="m-1" />
                                             <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
                                             <p className="text text_type_digits-default mb-1">
@@ -92,7 +105,7 @@ const BurgerIngredients = ({data}) => {
                             data.map((item) => {
                                 if (item.type === 'main') {
                                     return (
-                                        <li className={styles.ingredient_card} key={item._id}>
+                                        <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)}>
                                             <Counter count={1} size="default" extraClass="m-1" />
                                             <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
                                             <p className="text text_type_digits-default mb-1">
@@ -108,6 +121,9 @@ const BurgerIngredients = ({data}) => {
                     </ul>
                 </li>
             </ul>
+            {isModalOpen && <Modal header={'Детали ингредиента'} onClose={handleCloseModal}>
+                <IngredientDetails data={modalData}/>
+            </Modal>}
         </section>
     )
 }
