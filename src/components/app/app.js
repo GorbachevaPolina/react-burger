@@ -4,7 +4,8 @@ import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-const URL = "https://norma.nomoreparties.space/api/ingredients"
+import {URL} from '../../utils/url'
+import { burgerIngredientsContext } from '../../services/burger-ingredients-context';
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
 
   const getData = async () => {
     setIsLoading(true)
-    fetch(URL)
+    fetch(`${URL}ingredients`)
       .then((response) => {
         if (response.ok) {
           return response.json()
@@ -25,7 +26,7 @@ function App() {
         setData(result.data)
       })
       .catch((error) => {
-        setError(error.message)
+        setError(error)
       })
       .finally(() => {
         setIsLoading(false)
@@ -45,11 +46,14 @@ function App() {
       <>
         <AppHeader />
         <main className={styles.main}>
+          
           {
             !isLoading ? 
               <>
-              <BurgerIngredients data={data}/>
-              <BurgerConstructor data={data}/>
+                <BurgerIngredients data={data}/>
+                <burgerIngredientsContext.Provider value={data}>
+                  <BurgerConstructor/>
+                </burgerIngredientsContext.Provider>
               </> : <h1>Загрузка</h1>
           }
         </main>
