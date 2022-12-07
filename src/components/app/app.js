@@ -5,11 +5,11 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 import {URL} from '../../utils/url'
-import { burgerIngredientsContext } from '../../services/burger-ingredients-context';
+import { BurgerIngredientsContext } from '../../context/burger-ingredients-context';
 
 function App() {
 
-  const [data, setData] = useState([]);
+  const [ingredients, setIngredients] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,7 +23,7 @@ function App() {
         return Promise.reject(`Ошибка ${response.status}`)
       })
       .then((result) => {
-        setData(result.data)
+        setIngredients(result.data)
       })
       .catch((error) => {
         setError(error)
@@ -50,10 +50,10 @@ function App() {
           {
             !isLoading ? 
               <>
-                <BurgerIngredients data={data}/>
-                <burgerIngredientsContext.Provider value={data}>
+                <BurgerIngredients data={ingredients}/>
+                <BurgerIngredientsContext.Provider value={ingredients}>
                   <BurgerConstructor/>
-                </burgerIngredientsContext.Provider>
+                </BurgerIngredientsContext.Provider>
               </> : <h1>Загрузка</h1>
           }
         </main>

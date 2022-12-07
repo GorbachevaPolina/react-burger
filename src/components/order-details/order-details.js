@@ -1,9 +1,9 @@
 import React, {useContext} from 'react'
-import { orderNumberContext } from '../../services/order-number-context'
+import { OrderNumberContext } from '../../context/order-number-context'
 import doneIcon from '../../images/done.png'
 
 const OrderDetails = () => {
-    const orderNumber = useContext(orderNumberContext)
+    const orderNumber = useContext(OrderNumberContext)
     return (
         <>
             <p className="text text_type_digits-large">{orderNumber}</p>

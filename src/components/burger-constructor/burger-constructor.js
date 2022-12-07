@@ -3,8 +3,8 @@ import styles from './burger-constructor.module.css'
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import { burgerIngredientsContext } from "../../services/burger-ingredients-context";
-import { orderNumberContext } from "../../services/order-number-context";
+import { BurgerIngredientsContext } from "../../context/burger-ingredients-context";
+import { OrderNumberContext } from "../../context/order-number-context";
 
 import {URL} from '../../utils/url'
 
@@ -40,7 +40,7 @@ const BurgerConstructor = () => {
         }
     }
 
-    const data = useContext(burgerIngredientsContext);
+    const data = useContext(BurgerIngredientsContext);
 
     const [constructorState, dispatch] = useReducer(reducer, initialState)
 
@@ -127,9 +127,9 @@ const BurgerConstructor = () => {
                     {
                         error ? 
                             <h1>Возникла ошибка, перезагрузите страницу и повторите заказ</h1> 
-                            : <orderNumberContext.Provider value={orderNumber}>
+                            : <OrderNumberContext.Provider value={orderNumber}>
                                 <OrderDetails />
-                              </orderNumberContext.Provider>
+                              </OrderNumberContext.Provider>
                     }
                     
                 </Modal>}
