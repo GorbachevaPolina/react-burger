@@ -1,0 +1,8 @@
+.ingredient_card {
+    text-align: center;
+    position: relative;
+}
+
+.card_icon {
+    vertical-align: middle
+}

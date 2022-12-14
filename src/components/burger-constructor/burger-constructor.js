@@ -6,24 +6,40 @@ import Modal from "../modal/modal";
 import { BurgerIngredientsContext } from "../../context/burger-ingredients-context";
 import { OrderNumberContext } from "../../context/order-number-context";
 
+import { ADD_BUN, ADD_CONSTRUCTOR_INGREDIENT } from "../../services/actions/burger-constructor";
 import { useSelector, useDispatch } from 'react-redux'
+import { useDrop } from "react-dnd";
 
 import {URL} from '../../utils/url'
 
-// const initialState = {
-//     total: 0,
-//     data: {
-//         bun: {},
-//         ingredients: []
-//     }
-// }
-
 const BurgerConstructor = () => {
-    const { bun, main } = useSelector((store) => store.burgerConstructor)
+    const { bun, main } = useSelector((store) => store.burgerIngredients)
+    const dispatch = useDispatch()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [orderNumber, setOrderNumber] = useState(0)
     const [error, setError] = useState(null);
+
+    const addIngredient = (item) => {
+        if (item.type === 'bun') {
+            dispatch({
+                type: ADD_BUN,
+                id: item.id
+            })
+        } else {
+            dispatch({
+                type: ADD_CONSTRUCTOR_INGREDIENT,
+                id: item.id
+            })
+        }
+    }
+
+    const [, ref] = useDrop({
+        accept: ['bun', 'sauce', 'main'],
+        drop(item) {
+            addIngredient(item)
+        }
+    })
 
     // const checkout = async () => {
     //     const data = [constructorState.data.bun._id].concat(constructorState.data.ingredients.map(item => item._id))
@@ -54,14 +70,14 @@ const BurgerConstructor = () => {
     }
     
     return ( 
-        <section className={`${styles.wrapper} mt-25 mb-10 pl-4`}>
-                <span className="ml-8"><ConstructorElement
+        <section className={`${styles.wrapper} mt-25 mb-10 pl-4`} ref={ref}>
+                {Object.keys(bun).length !== 0 ? <span className="ml-8"><ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${bun.name} (верх)`}
                     price={bun.price}
                     thumbnail={bun.image}
-                /></span>
+                /></span> : null}
                 <ul className={`${styles.varied_ingredients} custom-scroll`}>
                     {
                         main.map((item, index) => {
@@ -79,14 +95,14 @@ const BurgerConstructor = () => {
                         })
                     }
                 </ul>
-                <span className="ml-8">
+                {Object.keys(bun).length !== 0 ? <span className="ml-8">
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
                     text={`${bun.name} (низ)`}
                     price={bun.price}
                     thumbnail={bun.image}
-                /></span>
+                /></span> : null}
 
                 {/* <div className={`${styles.checkout} mt-10 mr-8`}>
                     <p className="text text_type_digits-medium mr-10">

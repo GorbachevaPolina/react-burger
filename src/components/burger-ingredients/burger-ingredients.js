@@ -1,10 +1,9 @@
-import React, {useState, useRef, useEffect} from "react";
-import PropTypes from 'prop-types'
-import {Tab, CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components"
+import React, {useState, useEffect} from "react";
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
-import dataShape from "../../utils/types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import Ingredient from "./ingredient";
 
 import { useInView } from "react-intersection-observer";
 import { useSelector, useDispatch } from 'react-redux'
@@ -15,7 +14,6 @@ const BurgerIngredients = () => {
     const dispatch = useDispatch();
     const {burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed} = useSelector((store) => store.burgerIngredients)
     
-    const [current, setCurrent] = useState('bun');
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const [refBun, inViewBun, entryBun] = useInView({threshold: 1});
@@ -82,15 +80,7 @@ const BurgerIngredients = () => {
                             burgerIngredients.map((item) => {
                                 if (item.type === 'bun') {
                                     return (
-                                        <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)}>
-                                            <Counter count={1} size="default" extraClass="m-1" />
-                                            <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
-                                            <p className="text text_type_digits-default mb-1">
-                                                {item.price}
-                                                <span className={`${styles.card_icon} ml-1`}><CurrencyIcon type="primary"/></span>
-                                            </p>
-                                            <p className="text text_type_main-small">{item.name}</p>
-                                        </li>
+                                        <Ingredient item={item} handleOpenModal={handleOpenModal}/>
                                     )
                                 }
                             })
@@ -104,15 +94,7 @@ const BurgerIngredients = () => {
                             burgerIngredients.map((item) => {
                                 if (item.type === 'sauce') {
                                     return (
-                                        <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)}>
-                                            <Counter count={1} size="default" extraClass="m-1" />
-                                            <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
-                                            <p className="text text_type_digits-default mb-1">
-                                                {item.price}
-                                                <span className={`${styles.card_icon} ml-1`}><CurrencyIcon type="primary"/></span>
-                                            </p>                                        
-                                            <p className="text text_type_main-small">{item.name}</p>
-                                        </li>
+                                        <Ingredient item={item} handleOpenModal={handleOpenModal}/>
                                     )
                                 }
                             })
@@ -126,15 +108,7 @@ const BurgerIngredients = () => {
                             burgerIngredients.map((item) => {
                                 if (item.type === 'main') {
                                     return (
-                                        <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)}>
-                                            <Counter count={1} size="default" extraClass="m-1" />
-                                            <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
-                                            <p className="text text_type_digits-default mb-1">
-                                                {item.price}
-                                                <span className={`${styles.card_icon} ml-1`}><CurrencyIcon type="primary"/></span>
-                                            </p>                                        
-                                            <p className="text text_type_main-small">{item.name}</p>
-                                        </li>
+                                        <Ingredient item={item} handleOpenModal={handleOpenModal}/>
                                     )
                                 }
                             })
