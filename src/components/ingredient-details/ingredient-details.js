@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux'
 
 const IngredientDetails = () => {
     const data = useSelector((store) => store.currentIngredient.currentIngredient)
+    
     return (
         <>
                 <img src={data.image_large} alt={data.name} />

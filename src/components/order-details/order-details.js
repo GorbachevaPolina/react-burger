@@ -1,9 +1,10 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import doneIcon from '../../images/done.png'
 import { useSelector } from 'react-redux'
 
 const OrderDetails = () => {
     const orderNumber = useSelector((store) => store.order.order)
+
     return (
         <>
             <p className="text text_type_digits-large">{orderNumber}</p>

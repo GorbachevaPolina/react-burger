@@ -1,4 +1,6 @@
 import React, { useRef } from 'react'
+import PropTypes from 'prop-types'
+import dataShape from '../../utils/types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { REMOVE_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-constructor';
 import { useDispatch } from 'react-redux';
@@ -64,6 +66,12 @@ const ConstructorIngredient = ({item, moveIngredient, index}) => {
                  />
         </li>
     )
+}
+
+ConstructorIngredient.propTypes = {
+    item: dataShape.isRequired,
+    moveIngredient: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired
 }
 
 export default ConstructorIngredient;

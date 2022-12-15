@@ -1,22 +1,22 @@
-import React, {useState, useContext, useReducer, useEffect} from "react";
+import React, {useState} from "react";
 import styles from './burger-constructor.module.css'
-import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import { BurgerIngredientsContext } from "../../context/burger-ingredients-context";
-import { OrderNumberContext } from "../../context/order-number-context";
 
 import { ADD_BUN, ADD_CONSTRUCTOR_INGREDIENT, MOVE_INGREDIENT, REMOVE_BUN } from "../../services/actions/burger-constructor";
 import { useSelector, useDispatch } from 'react-redux'
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from 'uuid';
 
-import {URL} from '../../utils/url'
 import ConstructorIngredient from "./constructor-ingredient";
 import { getOrder } from "../../services/actions/order";
 
 const BurgerConstructor = () => {
     const { constructorIngredients, bun, main } = useSelector((store) => store.burgerIngredients)
+    const { orderFailed } = useSelector((store) => store.order)
+    const dispatch = useDispatch()
+
     const total = constructorIngredients.reduce((prev, curr) => {
         if (curr.type === 'bun') {
             return prev + 2 * curr.price
@@ -24,11 +24,8 @@ const BurgerConstructor = () => {
             return prev + curr.price
         }
     }, 0)
-    const dispatch = useDispatch()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [orderNumber, setOrderNumber] = useState(0)
-    const [error, setError] = useState(null);
 
     const addIngredient = (item) => {
         if (item.type === 'bun') {
@@ -81,6 +78,7 @@ const BurgerConstructor = () => {
                     price={bun.price}
                     thumbnail={bun.image}
                 /></span> : null}
+
                 <ul className={`${styles.varied_ingredients} custom-scroll`}>
                     {
                         main.map((item, index) => {
@@ -91,6 +89,7 @@ const BurgerConstructor = () => {
                         })
                     }
                 </ul>
+                
                 {Object.keys(bun).length !== 0 ? <span className="ml-8">
                 <ConstructorElement
                     type="bottom"
@@ -109,7 +108,7 @@ const BurgerConstructor = () => {
                 </div>
                 {isModalOpen && <Modal header={null} onClose={handleCloseModal}>
                     {
-                        error ? 
+                        orderFailed ? 
                             <h1>Возникла ошибка, перезагрузите страницу и повторите заказ</h1> 
                             : <OrderDetails />
                     }

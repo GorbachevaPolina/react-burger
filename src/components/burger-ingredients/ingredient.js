@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types'
+import dataShape from "../../utils/types";
 import styles from './ingredient.module.css'
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
@@ -28,6 +30,11 @@ const Ingredient = ({item, handleOpenModal}) => {
             <p className="text text_type_main-small">{item.name}</p>
         </li>
     )
+}
+
+Ingredient.propTypes = {
+    item: dataShape.isRequired,
+    handleOpenModal: PropTypes.func.isRequired
 }
 
 export default Ingredient;

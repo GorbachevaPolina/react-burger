@@ -80,7 +80,7 @@ const BurgerIngredients = () => {
                             burgerIngredients.map((item) => {
                                 if (item.type === 'bun') {
                                     return (
-                                        <Ingredient item={item} handleOpenModal={handleOpenModal}/>
+                                        <Ingredient item={item} handleOpenModal={handleOpenModal} key={item._id}/>
                                     )
                                 }
                             })
@@ -94,7 +94,7 @@ const BurgerIngredients = () => {
                             burgerIngredients.map((item) => {
                                 if (item.type === 'sauce') {
                                     return (
-                                        <Ingredient item={item} handleOpenModal={handleOpenModal}/>
+                                        <Ingredient item={item} handleOpenModal={handleOpenModal} key={item._id}/>
                                     )
                                 }
                             })
@@ -108,7 +108,7 @@ const BurgerIngredients = () => {
                             burgerIngredients.map((item) => {
                                 if (item.type === 'main') {
                                     return (
-                                        <Ingredient item={item} handleOpenModal={handleOpenModal}/>
+                                        <Ingredient item={item} handleOpenModal={handleOpenModal} key={item._id}/>
                                     )
                                 }
                             })
