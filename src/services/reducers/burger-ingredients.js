@@ -39,19 +39,25 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 ...state,
                 constructorIngredients: [
                     ...state.constructorIngredients,
-                    state.burgerIngredients.find(item => item._id === action.id)
+                    {
+                        ...state.burgerIngredients.find(item => item._id === action.id),
+                        constructor_id: action.constructor_id
+                    }
                 ],
                 main: [
                     ...state.main,
-                    state.burgerIngredients.find(item => item._id === action.id)
+                    {
+                        ...state.burgerIngredients.find(item => item._id === action.id),
+                        constructor_id: action.constructor_id
+                    }
                 ]
             }
         }
         case REMOVE_CONSTRUCTOR_INGREDIENT: {
             return {
                 ...state,
-                constructorIngredients: [...state.constructorIngredients].filter(item => item._id !== action.id),
-                main: [...state.main].filter(item => item._id !== action.id)
+                constructorIngredients: [...state.constructorIngredients].filter(item => item.constructor_id !== action.constructor_id),
+                main: [...state.main].filter(item => item.constructor_id !== action.constructor_id)
             }
         }
         case REMOVE_BUN: {

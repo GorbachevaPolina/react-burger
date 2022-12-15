@@ -9,8 +9,10 @@ import { OrderNumberContext } from "../../context/order-number-context";
 import { ADD_BUN, ADD_CONSTRUCTOR_INGREDIENT } from "../../services/actions/burger-constructor";
 import { useSelector, useDispatch } from 'react-redux'
 import { useDrop } from "react-dnd";
+import { v4 as uuidv4 } from 'uuid';
 
 import {URL} from '../../utils/url'
+import ConstructorIngredient from "./constructor-ingredient";
 
 const BurgerConstructor = () => {
     const { bun, main } = useSelector((store) => store.burgerIngredients)
@@ -29,7 +31,8 @@ const BurgerConstructor = () => {
         } else {
             dispatch({
                 type: ADD_CONSTRUCTOR_INGREDIENT,
-                id: item.id
+                id: item.id,
+                constructor_id: uuidv4()
             })
         }
     }
@@ -80,16 +83,9 @@ const BurgerConstructor = () => {
                 /></span> : null}
                 <ul className={`${styles.varied_ingredients} custom-scroll`}>
                     {
-                        main.map((item, index) => {
+                        main.map((item) => {
                             return (
-                                <li key={index}>
-                                    <span className="mr-2"><DragIcon type="primary" /></span>
-                                    <ConstructorElement
-                                        text={item.name}
-                                        price={item.price}
-                                        thumbnail={item.image}
-                                    />
-                                </li>
+                                <ConstructorIngredient item={item} key={item.constructor_id}/>
                             )
                             
                         })
