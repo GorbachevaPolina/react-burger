@@ -21,7 +21,7 @@ const Ingredient = ({item, handleOpenModal}) => {
     })
     return (
         <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)} ref={ref}>
-            <Counter count={counter} size="default" extraClass="m-1" />
+            {counter ? <Counter count={counter} size="default" extraClass="m-1" /> : null}
             <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
             <p className="text text_type_digits-default mb-1">
                 {item.price}

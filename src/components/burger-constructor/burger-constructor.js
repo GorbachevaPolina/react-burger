@@ -54,7 +54,8 @@ const BurgerConstructor = () => {
 
     const handleOrder = () => {
         setIsModalOpen(true)
-        dispatch(getOrder(constructorIngredients))
+        const data = constructorIngredients.map((item) => item._id)
+        dispatch(getOrder(data))
     }
 
     const handleCloseModal = () => {
