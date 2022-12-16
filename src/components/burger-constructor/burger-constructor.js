@@ -11,50 +11,55 @@ import { v4 as uuidv4 } from 'uuid';
 
 import ConstructorIngredient from "./constructor-ingredient";
 import { getOrder } from "../../services/actions/order";
+import { DECREASE_COUNTER, INCREASE_COUNTER } from "../../services/actions/burger-ingredients";
 
 const BurgerConstructor = () => {
-    const { constructorIngredients, bun, main } = useSelector((store) => store.burgerIngredients)
+    const { bun, main } = useSelector((store) => store.burgerConstructor)
     const { orderFailed } = useSelector((store) => store.order)
     const dispatch = useDispatch()
 
-    const total = constructorIngredients.reduce((prev, curr) => {
-        if (curr.type === 'bun') {
-            return prev + 2 * curr.price
-        } else {
-            return prev + curr.price
-        }
-    }, 0)
+    const total = bun ? 2 * bun.price + main.reduce((prev, curr) => prev + curr.price, 0) : main.reduce((prev, curr) => prev + curr.price, 0)
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const addIngredient = (item) => {
         if (item.type === 'bun') {
-            dispatch({
-                type: REMOVE_BUN
-            })
+            if (bun) {
+                dispatch({
+                    type: REMOVE_BUN
+                })
+                dispatch({
+                    type: DECREASE_COUNTER,
+                    id: bun._id
+                })
+            }
             dispatch({
                 type: ADD_BUN,
-                id: item.id
+                item: item
             })
         } else {
             dispatch({
                 type: ADD_CONSTRUCTOR_INGREDIENT,
-                id: item.id,
+                item: item,
                 constructor_id: uuidv4()
             })
         }
+        dispatch({
+            type: INCREASE_COUNTER,
+            id: item._id
+        })
     }
 
     const [, ref] = useDrop({
         accept: ['bun', 'sauce', 'main'],
         drop(item) {
-            addIngredient(item)
+            addIngredient(item.item)
         }
     })
 
     const handleOrder = () => {
         setIsModalOpen(true)
-        const data = constructorIngredients.map((item) => item._id)
+        const data = [bun._id, ...main.map((item) => item._id), bun._id]
         dispatch(getOrder(data))
     }
 

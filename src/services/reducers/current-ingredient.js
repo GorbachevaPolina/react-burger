@@ -1,7 +1,7 @@
 import { VIEW_CURRENT_INGREDIENT, STOP_VIEW_CURRENT_INGREDIENT } from "../actions/current-ingredient"
 
 const initialState = {
-    currentIngredient: {}
+    currentIngredient: null
 }
 
 export const currentIngredientReducer = (state = initialState, action) => {
@@ -13,7 +13,7 @@ export const currentIngredientReducer = (state = initialState, action) => {
         }
         case STOP_VIEW_CURRENT_INGREDIENT: {
             return {
-                currentIngredient: {}
+                currentIngredient: null
             }
         }
         default: {

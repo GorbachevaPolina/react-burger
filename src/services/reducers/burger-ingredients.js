@@ -1,14 +1,11 @@
-import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_REQUEST } from "../actions/burger-ingredients"
-import { ADD_CONSTRUCTOR_INGREDIENT, REMOVE_CONSTRUCTOR_INGREDIENT, ADD_BUN, REMOVE_BUN, MOVE_INGREDIENT } from "../actions/burger-constructor"
+import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_REQUEST, INCREASE_COUNTER, DECREASE_COUNTER } from "../actions/burger-ingredients"
+
 
 const initialState = {
     burgerIngredients: [],
     burgerIngredientsRequest: false,
     burgerIngredientsFailed: false,
-
-    constructorIngredients: [],
-    bun: null,
-    main: []
+    counter: null
 }
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
@@ -24,7 +21,8 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 ...state,
                 burgerIngredientsRequest: false,
                 burgerIngredientsFailed: false,
-                burgerIngredients: action.ingredients
+                burgerIngredients: action.ingredients,
+                counter: action.ingredients.reduce((obj, item) => (obj[item._id] = 0, obj) , {})
             }
         }
         case GET_INGREDIENTS_FAILED: {
@@ -35,56 +33,23 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 burgerIngredientsRequest: false
             }
         }
-        case ADD_CONSTRUCTOR_INGREDIENT: {
+        case INCREASE_COUNTER: {
             return {
                 ...state,
-                constructorIngredients: [
-                    ...state.constructorIngredients,
-                    {
-                        ...state.burgerIngredients.find(item => item._id === action.id),
-                        constructor_id: action.constructor_id
-                    }
-                ],
-                main: [
-                    ...state.main,
-                    {
-                        ...state.burgerIngredients.find(item => item._id === action.id),
-                        constructor_id: action.constructor_id
-                    }
-                ]
+                counter: {
+                    ...state.counter,
+                    [action.id]: state.counter[action.id] + 1
+                }
             }
         }
-        case REMOVE_CONSTRUCTOR_INGREDIENT: {
+        case DECREASE_COUNTER: {
             return {
                 ...state,
-                constructorIngredients: [...state.constructorIngredients].filter(item => item.constructor_id !== action.constructor_id),
-                main: [...state.main].filter(item => item.constructor_id !== action.constructor_id)
+                counter: {
+                    ...state.counter,
+                    [action.id]: state.counter[action.id] - 1
+                }
             }
-        }
-        case REMOVE_BUN: {
-            return {
-                ...state,
-                constructorIngredients: state.constructorIngredients.filter(item => item.type !== 'bun'),
-                bun: {}
-            }
-        }
-        case ADD_BUN: {
-            return {
-                ...state,
-                constructorIngredients: [
-                    ...state.constructorIngredients,
-                    state.burgerIngredients.find(item => item._id === action.id)
-                ],
-                bun: state.burgerIngredients.find(item => item._id === action.id)
-                
-            }
-        }
-        case MOVE_INGREDIENT: {
-            const tmp = state.main.filter((item, idx) => idx !== action.dragIndex)
-            return {
-                ...state,
-                main: [...tmp.slice(0, action.hoverIndex), state.main[action.dragIndex], ...tmp.slice(action.hoverIndex)]
-            } 
         }
         default: {
             return state

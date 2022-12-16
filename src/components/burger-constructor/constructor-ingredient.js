@@ -5,6 +5,7 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import { REMOVE_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-constructor';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
+import { DECREASE_COUNTER } from '../../services/actions/burger-ingredients';
 
 const ConstructorIngredient = ({item, moveIngredient, index}) => {
     const dispatch = useDispatch();
@@ -50,6 +51,10 @@ const ConstructorIngredient = ({item, moveIngredient, index}) => {
     drag(drop(ref))
 
     const handleDeleteElement = () => {
+        dispatch({
+            type: DECREASE_COUNTER,
+            id: item._id
+        })
         dispatch({
             type: REMOVE_CONSTRUCTOR_INGREDIENT,
             constructor_id: item.constructor_id

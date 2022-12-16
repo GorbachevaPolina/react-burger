@@ -7,17 +7,11 @@ import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 
 const Ingredient = ({item, handleOpenModal}) => {
-    const counter = useSelector((store) => store.burgerIngredients.constructorIngredients).reduce((prev, curr) => {
-        if (curr._id === item._id) {
-            return prev + 1;
-        } else {
-            return prev
-        }
-    }, 0)
+    const counter = useSelector((store) => store.burgerIngredients.counter[item._id])
     
     const [, ref] = useDrag({
         type: `${item.type}`,
-        item: { id: item._id, type: item.type }
+        item: { item: item }
     })
     return (
         <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)} ref={ref}>
