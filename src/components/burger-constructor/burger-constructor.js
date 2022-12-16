@@ -72,7 +72,7 @@ const BurgerConstructor = () => {
     
     return ( 
         <section className={`${styles.wrapper} mt-25 mb-10 pl-4`} ref={ref}>
-                {Object.keys(bun).length !== 0 ? <span className="ml-8"><ConstructorElement
+                {bun ? <span className="ml-8"><ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${bun.name} (верх)`}
@@ -91,7 +91,7 @@ const BurgerConstructor = () => {
                     }
                 </ul>
                 
-                {Object.keys(bun).length !== 0 ? <span className="ml-8">
+                {bun ? <span className="ml-8">
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}

@@ -7,7 +7,7 @@ const initialState = {
     burgerIngredientsFailed: false,
 
     constructorIngredients: [],
-    bun: {},
+    bun: null,
     main: []
 }
 
@@ -30,6 +30,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         case GET_INGREDIENTS_FAILED: {
             return {
                 ...state,
+                burgerIngredients: [],
                 burgerIngredientsFailed: true,
                 burgerIngredientsRequest: false
             }
