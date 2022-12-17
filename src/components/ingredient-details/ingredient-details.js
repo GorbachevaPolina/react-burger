@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from './ingredient-details.module.css'
-import PropTypes from 'prop-types'
-import dataShape from '../../utils/types'
+import {useSelector} from 'react-redux'
 
-const IngredientDetails = ({data}) => {
+const IngredientDetails = () => {
+    const data = useSelector((store) => store.currentIngredient.currentIngredient)
+    
     return (
         <>
                 <img src={data.image_large} alt={data.name} />
@@ -30,8 +31,5 @@ const IngredientDetails = ({data}) => {
     )
 }
 
-IngredientDetails.propTypes = {
-    data: dataShape.isRequired
-}
 
 export default IngredientDetails

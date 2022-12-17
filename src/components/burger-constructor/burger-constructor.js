@@ -1,135 +1,122 @@
-import React, {useState, useContext, useReducer, useEffect} from "react";
+import React, {useState} from "react";
 import styles from './burger-constructor.module.css'
-import {ConstructorElement, DragIcon, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import OrderDetails from "../order-details/order-details";
 import Modal from "../modal/modal";
-import { BurgerIngredientsContext } from "../../context/burger-ingredients-context";
-import { OrderNumberContext } from "../../context/order-number-context";
 
-import {URL} from '../../utils/url'
+import { ADD_BUN, ADD_CONSTRUCTOR_INGREDIENT, MOVE_INGREDIENT, REMOVE_BUN } from "../../services/actions/burger-constructor";
+import { useSelector, useDispatch } from 'react-redux'
+import { useDrop } from "react-dnd";
+import { v4 as uuidv4 } from 'uuid';
 
-const initialState = {
-    total: 0,
-    data: {
-        bun: {},
-        ingredients: []
-    }
-}
+import ConstructorIngredient from "./constructor-ingredient";
+import { getOrder } from "../../services/actions/order";
+import { DECREASE_COUNTER, INCREASE_COUNTER } from "../../services/actions/burger-ingredients";
 
 const BurgerConstructor = () => {
+    const { bun, main } = useSelector((store) => store.burgerConstructor)
+    const { orderFailed } = useSelector((store) => store.order)
+    const dispatch = useDispatch()
 
-    const reducer = (state = initialState, action) => {
-        switch (action.type) {
-            case "COUNT_TOTAL":
-                return {
-                    ...state,
-                    total: 2 * state.data.bun.price + state.data.ingredients.reduce((prev, curr) => prev + curr.price, 0)
-                }
-            case "SEPARATE_INGREDIENTS":
-                return {
-                    total: 0,
-                    data: {
-                        bun: data.find((item) => {
-                            if(item.type === 'bun') {
-                                return true
-                            }
-                        }),
-                        ingredients: data.filter(item => item.type !== 'bun')
-                    }
-                }  
-        }
-    }
-
-    const data = useContext(BurgerIngredientsContext);
-
-    const [constructorState, dispatch] = useReducer(reducer, initialState)
+    const total = bun ? 2 * bun.price + main.reduce((prev, curr) => prev + curr.price, 0) : main.reduce((prev, curr) => prev + curr.price, 0)
 
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [orderNumber, setOrderNumber] = useState(0)
-    const [error, setError] = useState(null);
 
-    const checkout = async () => {
-        const data = [constructorState.data.bun._id].concat(constructorState.data.ingredients.map(item => item._id))
-        fetch(`${URL}orders`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({'ingredients': data})
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json()
-                  } 
-                  return Promise.reject(`Ошибка ${response.status}`)
+    const addIngredient = (item) => {
+        if (item.type === 'bun') {
+            if (bun) {
+                dispatch({
+                    type: REMOVE_BUN
+                })
+                dispatch({
+                    type: DECREASE_COUNTER,
+                    id: bun._id
+                })
+            }
+            dispatch({
+                type: ADD_BUN,
+                item: item
             })
-            .then((result) => setOrderNumber(result['order']['number']))
-            .catch((error) => setError(error))
+        } else {
+            dispatch({
+                type: ADD_CONSTRUCTOR_INGREDIENT,
+                item: item,
+                constructor_id: uuidv4()
+            })
+        }
+        dispatch({
+            type: INCREASE_COUNTER,
+            id: item._id
+        })
     }
+
+    const [, ref] = useDrop({
+        accept: ['bun', 'sauce', 'main'],
+        drop(item) {
+            addIngredient(item.item)
+        }
+    })
 
     const handleOrder = () => {
         setIsModalOpen(true)
-        checkout()
+        const data = [bun._id, ...main.map((item) => item._id), bun._id]
+        dispatch(getOrder(data))
     }
 
     const handleCloseModal = () => {
         setIsModalOpen(false)
     }
 
-    useEffect(() => {
-        dispatch({type: "SEPARATE_INGREDIENTS"});
-        dispatch({type: "COUNT_TOTAL"})
-    }, [data])
+    const moveIngredient = (dragIndex, hoverIndex) => {
+        dispatch({
+            type: MOVE_INGREDIENT,
+            dragIndex: dragIndex,
+            hoverIndex: hoverIndex
+        })
+    }
     
     return ( 
-        <section className={`${styles.wrapper} mt-25 mb-10 pl-4`}>
-                <span className="ml-8"><ConstructorElement
+        <section className={`${styles.wrapper} mt-25 mb-10 pl-4`} ref={ref}>
+                {bun ? <span className="ml-8"><ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={`${constructorState.data.bun.name} (верх)`}
-                    price={constructorState.data.bun.price}
-                    thumbnail={constructorState.data.bun.image}
-                /></span>
+                    text={`${bun.name} (верх)`}
+                    price={bun.price}
+                    thumbnail={bun.image}
+                /></span> : null}
+
                 <ul className={`${styles.varied_ingredients} custom-scroll`}>
                     {
-                        constructorState.data.ingredients.map((item, index) => {
+                        main.map((item, index) => {
                             return (
-                                <li key={index}>
-                                    <span className="mr-2"><DragIcon type="primary" /></span>
-                                    <ConstructorElement
-                                        text={item.name}
-                                        price={item.price}
-                                        thumbnail={item.image}
-                                    />
-                                </li>
+                                <ConstructorIngredient item={item} moveIngredient={moveIngredient} index={index} key={item.constructor_id}/>
                             )
                             
                         })
                     }
                 </ul>
-                <span className="ml-8">
+                
+                {bun ? <span className="ml-8">
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${constructorState.data.bun.name} (низ)`}
-                    price={constructorState.data.bun.price}
-                    thumbnail={constructorState.data.bun.image}
-                /></span>
+                    text={`${bun.name} (низ)`}
+                    price={bun.price}
+                    thumbnail={bun.image}
+                /></span> : null}
 
                 <div className={`${styles.checkout} mt-10 mr-8`}>
                     <p className="text text_type_digits-medium mr-10">
-                        {constructorState.total}
+                        {total}
                         <span className="ml-1"><CurrencyIcon type="primary" /></span>
                     </p>
-                    <Button htmlType="button" type="primary" size="large" onClick={handleOrder}>Оформить заказ</Button>
+                    {total ? <Button htmlType="button" type="primary" size="large" onClick={handleOrder}>Оформить заказ</Button> : null}
                 </div>
                 {isModalOpen && <Modal header={null} onClose={handleCloseModal}>
                     {
-                        error ? 
+                        orderFailed ? 
                             <h1>Возникла ошибка, перезагрузите страницу и повторите заказ</h1> 
-                            : <OrderNumberContext.Provider value={orderNumber}>
-                                <OrderDetails />
-                              </OrderNumberContext.Provider>
+                            : <OrderDetails />
                     }
                     
                 </Modal>}
