@@ -12,6 +12,7 @@ import Register from '../../pages/register';
 import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import Profile from '../../pages/profile';
+import { ProtectedAuthRoute, ProtectedUnauthRoute } from '../protected-route';
 
 function App() {
   return (
@@ -39,9 +40,9 @@ function App() {
           <Route path="/reset-password" exact={true}>
             <ResetPassword />
           </Route>
-          <Route path="/profile" exact={true}>
+          <ProtectedAuthRoute path="/profile" exact={true}>
             <Profile />
-          </Route>
+          </ProtectedAuthRoute>
         </Switch>
       </Router>
     </>
