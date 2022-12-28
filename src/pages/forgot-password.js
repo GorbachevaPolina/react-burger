@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom'
+import { Link, useHistory, Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './form.module.css'
+import { forgotPassword } from '../services/actions/user';
 
 const ForgotPassword = () => {
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [emailValue, setEmailValue] = useState('');
+
+    const handleClick = () => {
+        dispatch(forgotPassword(emailValue));
+        history.replace({ pathname: '/reset-password' })
+    }
 
     return (
         <div className={styles.container}>
@@ -18,7 +27,7 @@ const ForgotPassword = () => {
                 isIcon={false}
                 extraClass='mb-6'
             />
-            <Button htmlType="button" type="primary" size="medium" extraClass='mb-20'>
+            <Button htmlType="button" type="primary" size="medium" extraClass='mb-20' onClick={handleClick}>
                 Восстановить
             </Button>
             <p className="text text_type_main-default text_color_inactive">

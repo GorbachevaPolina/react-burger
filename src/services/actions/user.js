@@ -17,6 +17,16 @@ export const UPDATE_USER_INFO_REQUEST = "UPDATE_USER_INFO"
 export const UPDATE_USER_INFO_SUCCESS = "UPDATE_USER_INFO"
 export const UPDATE_USER_INFO_FAILED = "UPDATE_USER_INFO"
 
+export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
+export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
+
+export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
+export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS"
+
+export const LOGOUT = "LOGOUT"
+
 export function register(user) {
     return function(dispatch) {
         dispatch({
@@ -238,7 +248,76 @@ export function logout() {
             if(result.success) {
                 deleteCookie('token')
                 deleteCookie('refreshToken')
+                dispatch({
+                    type: LOGOUT
+                })
             }
+        })
+    }
+}
+
+export function forgotPassword(email) {
+    return function(dispatch) {
+        dispatch({
+            type: FORGOT_PASSWORD_REQUEST
+        })
+        fetch(`${URL}password-reset`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({email: email})
+        })
+        .then((response) => {
+            if(response.ok) {
+                return response.json()
+            }
+            return Promise.reject(`Ошибка ${response.status}`)
+        })
+        .then((result) => {
+            if(result.success) {
+                dispatch({
+                    type: FORGOT_PASSWORD_SUCCESS
+                })
+            }
+        })
+        .catch((error) => {
+            dispatch({
+                type: FORGOT_PASSWORD_FAILED
+            })
+        })
+    }
+}
+
+export function resetPassword(password, code) {
+    return function(dispatch) {
+        dispatch({
+            type: RESET_PASSWORD_REQUEST
+        })
+        fetch(`${URL}password-reset/reset`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({password: password, token: code})
+        })
+        .then((response) => {
+            if(response.ok) {
+                return response.json()
+            }
+            return Promise.reject(`Ошибка ${response.status}`)
+        })
+        .then((result) => {
+            if(result.success) {
+                dispatch({
+                    type: RESET_PASSWORD_SUCCESS
+                })
+            }
+        })
+        .catch((error) => {
+            dispatch({
+                type: RESET_PASSWORD_FAILED
+            })
         })
     }
 }

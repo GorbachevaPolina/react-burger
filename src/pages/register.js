@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { register } from '../services/actions/user'
@@ -8,6 +8,7 @@ import styles from './form.module.css'
 
 const Register = () => {
     const dispatch = useDispatch();
+    const location = useLocation()
     const { user } = useSelector((store) => store.user)
     const [registerInfo, setRegisterInfo] = useState({
         email: "",
@@ -22,7 +23,7 @@ const Register = () => {
 
     if(user) {
         return (
-            <Redirect to="/"/>
+            <Redirect to={ location.state?.from || '/' } />
         )
     }
 

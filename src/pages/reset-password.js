@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import { PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './form.module.css'
+import { resetPassword } from '../services/actions/user';
 
 const ResetPassword = () => {
+    const dispatch = useDispatch();
+    const history = useHistory()
+    const { forgotPasswordSuccess } = useSelector((store) => store.user)
     const [passwordValue, setPasswordValue] = useState('');
     const [codeValue, setCodeValue] = useState('');
+
+    const handleClick = () => {
+        dispatch(resetPassword(passwordValue, codeValue));
+        history.replace({pathname: '/login'})
+    }
+
+    if(!forgotPasswordSuccess) {
+        return <Redirect to='/forgot-password'/>
+    }
 
     return (
         <div className={styles.container}>
@@ -26,7 +40,7 @@ const ResetPassword = () => {
                 name={'code'}
                 extraClass='mb-6'
             />
-            <Button htmlType="button" type="primary" size="medium" extraClass='mb-20'>
+            <Button htmlType="button" type="primary" size="medium" extraClass='mb-20' onClick={handleClick}>
                 Сохранить
             </Button>
             <p className="text text_type_main-default text_color_inactive">

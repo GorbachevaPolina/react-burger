@@ -6,10 +6,11 @@ import styles from './profile.module.css'
 import { getUser, logout, updateToken, updateUser } from '../services/actions/user'
 import { getCookie } from '../utils/auth'
 import { GET_USER_FAILED } from '../services/actions/user'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
 const Profile = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const { user } = useSelector((store) => store.user)
     const [userInfo, setUserInfo] = useState({
         name: '',
@@ -36,17 +37,21 @@ const Profile = () => {
                 name: user.name
             })
         }
+
+        if(!user) {
+            history.replace({pathname: '/login'})
+        }
     }, [user])
 
     useEffect(() => {
         dispatch(getUser())
     }, [])
 
-    if(!user) {
-        return (
-            <Redirect to='/login'/>
-        )
-    }
+    // if(!user) {
+    //     return (
+    //         <Redirect to='/login'/>
+    //     )
+    // }
 
     return (
         <div className={styles.container}>
