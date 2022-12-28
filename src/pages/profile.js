@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import styles from './profile.module.css'
 import { getUser, logout, updateUser } from '../services/actions/user'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Switch, Route } from 'react-router-dom'
+import NotFound404 from './not-found-404'
 
 const Profile = () => {
     const dispatch = useDispatch()
@@ -15,6 +16,16 @@ const Profile = () => {
         email: '',
         password: ''
     })
+    const [isActive, setIsActive] = useState({
+        profile: true,
+        orders: false
+    })
+    const [isChanged, setIsChanged] = useState(false)
+
+    const onChange = (e) => {
+        setUserInfo({...userInfo, [e.target.name]: e.target.value})
+        setIsChanged(true)
+    }
 
     const handleLogout = () => {
         dispatch(logout())
@@ -22,6 +33,24 @@ const Profile = () => {
 
     const handleInfoUpdate = () => {
         dispatch(updateUser(userInfo))
+        setIsChanged(false)
+    }
+
+    const handleInfoRevert = () => {
+        setUserInfo({
+            email: user.email,
+            name: user.name,
+            password: ''
+        })
+        setIsChanged(false)
+    }
+
+    const handleRedirect = (path) => {
+        setIsActive({
+            profile: path === '/profile',
+            orders: path === '/profile/orders'
+        })
+        history.replace({pathname: path})
     }
 
     useEffect(() => {
@@ -42,22 +71,16 @@ const Profile = () => {
         dispatch(getUser())
     }, [])
 
-    // if(!user) {
-    //     return (
-    //         <Redirect to='/login'/>
-    //     )
-    // }
-
     return (
         <div className={styles.container}>
             <div>
-                <p className="text text_type_main-large mb-6">
+                <p className={`text text_type_main-large mb-6 ${isActive.profile ? "" : "text_color_inactive"} ${styles.text}`} onClick={() => handleRedirect('/profile')}>
                     Профиль
                 </p>
-                <p className="text text_type_main-large text_color_inactive mb-6">
+                <p className={`text text_type_main-large mb-6 ${isActive.orders ? "" : "text_color_inactive"} ${styles.text}`} onClick={() => handleRedirect('/profile/orders')}>
                     История заказов
                 </p>
-                <p className="text text_type_main-large text_color_inactive" onClick={handleLogout}>
+                <p className={`text text_type_main-large text_color_inactive ${styles.text}`} onClick={handleLogout}>
                     Выход
                 </p>
 
@@ -69,28 +92,42 @@ const Profile = () => {
                 <Input 
                     type={'text'}
                     placeholder={'Имя'}
-                    onChange={e => setUserInfo({...userInfo, name: e.target.value})}
+                    onChange={e => onChange(e)}
                     icon={'EditIcon'}
                     value={userInfo.name}
                     extraClass='mb-6'
+                    name={'name'}
                 />
                 <Input 
                     type={'email'}
                     placeholder={'Логин'}
-                    onChange={e => setUserInfo({...userInfo, email: e.target.value})}
+                    onChange={e => onChange(e)}
                     icon={'EditIcon'}
                     value={userInfo.email}
                     extraClass='mb-6'
+                    name={'email'}
                 />
                 <Input 
                     type={'password'}
                     placeholder={'Пароль'}
-                    onChange={e => setUserInfo({...userInfo, password: e.target.value})}
+                    onChange={e => onChange(e)}
                     icon={'EditIcon'}
                     value={userInfo.password}
                     extraClass='mb-6'
+                    name={'password'}
                 />
-                <Button htmlType="button" type="primary" size="medium" onClick={handleInfoUpdate}>Сохранить</Button>
+                {isChanged ? (
+                    <>
+                    <Button htmlType="button" type="primary" size="medium" onClick={handleInfoRevert} extraClass={styles.button}>Отмена</Button>
+                    <Button htmlType="button" type="primary" size="medium" onClick={handleInfoUpdate}>Сохранить</Button>
+                    </>
+                ) : null}
+
+                <Switch>
+                    <Route path="/profile/orders">
+                        <NotFound404 />
+                    </Route>
+                </Switch>
             </div>
         </div>
     )

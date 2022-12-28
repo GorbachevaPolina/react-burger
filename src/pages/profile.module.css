@@ -9,3 +9,11 @@
 
     min-width: 900px;
 }
+
+.text:hover {
+    cursor: pointer;
+}
+
+.button {
+    margin-right: 10px;
+}

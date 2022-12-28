@@ -64,7 +64,7 @@ export function ProtectedUnauthRoute({ children, ...rest }) {
                 !user ? (
                     children
                 ) : (
-                    <Redirect to='/profile' />
+                    <Redirect to='/' />
                 )
             )}
         />
