@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory, Redirect } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
 
 import styles from './form.module.css'
 import { forgotPassword } from '../services/actions/user';

@@ -2,6 +2,7 @@ import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import styles from './app.module.css'
 import AppHeader from '../app-header/app-header'
@@ -13,15 +14,12 @@ import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import Profile from '../../pages/profile';
 import { ProtectedAuthRoute, ProtectedUnauthRoute } from '../protected-route';
-import { useDispatch } from 'react-redux';
-
-
+import NotFound404 from '../../pages/not-found-404';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { STOP_VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
 
 function App() {
-  
   return (
     <>
       <Router>
@@ -46,6 +44,7 @@ function App() {
           </ProtectedAuthRoute>
 
           <ModalSwitch />
+        
         </Switch>
       </Router>
     </>
@@ -53,18 +52,16 @@ function App() {
 }
 
 const ModalSwitch = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const history = useHistory();
   const location = useLocation();
   const background = location.state && location.state.background;
 
-  // const handleCloseModal = () => {
-  //   dispatch({
-  //       type: STOP_VIEW_CURRENT_INGREDIENT
-  //   })
-  // }
   const back = () => {
     history.goBack();
+    dispatch({
+      type: STOP_VIEW_CURRENT_INGREDIENT
+    })
   };
   
   return (
@@ -81,6 +78,10 @@ const ModalSwitch = () => {
         <Route path="/ingredients/:id">
           <IngredientDetails />
         </Route>
+
+        <Route path="*">
+            <NotFound404 />
+          </Route>
       </Switch>
 
       {background && 

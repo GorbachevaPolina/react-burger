@@ -1,24 +1,17 @@
 import React, {useState, useEffect} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
-import Ingredient from "./ingredient";
-
-import { Link, Route, useHistory, useLocation } from 'react-router-dom'
-
+import { Link, useLocation } from 'react-router-dom'
 import { useInView } from "react-intersection-observer";
 import { useSelector, useDispatch } from 'react-redux'
 import { getIngredients } from "../../services/actions/burger-ingredients";
-import { STOP_VIEW_CURRENT_INGREDIENT, VIEW_CURRENT_INGREDIENT } from "../../services/actions/current-ingredient";
+
+import Ingredient from "./ingredient";
 
 const BurgerIngredients = () => {
     const dispatch = useDispatch();
     const location = useLocation()
     const {burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed} = useSelector((store) => store.burgerIngredients)
-    const { currentIngredient } = useSelector((store) => store.currentIngredient)
-    
-    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const [refBun, inViewBun, entryBun] = useInView({threshold: 1});
     const [refSauce, inViewSauce, entrySauce] = useInView({threshold: 0.5});
@@ -37,21 +30,6 @@ const BurgerIngredients = () => {
                 break;
         }
     }
-
-    // const handleOpenModal = (item) => {
-    //     dispatch({
-    //         type: VIEW_CURRENT_INGREDIENT,
-    //         item: item
-    //     })
-    //     setIsModalOpen(true)
-    // }
-
-    // const handleCloseModal = () => {
-    //     dispatch({
-    //         type: STOP_VIEW_CURRENT_INGREDIENT
-    //     })
-    //     setIsModalOpen(false)
-    // }
 
     useEffect(() => {
         dispatch(getIngredients())
@@ -126,15 +104,6 @@ const BurgerIngredients = () => {
                     </ul>
                 </li>
             </ul>
-            {/* {isModalOpen && <Modal header={'Детали ингредиента'} onClose={handleCloseModal} >
-                            <IngredientDetails/>
-                        </Modal>
-            } */}
-            {/* <Route path="/ingredients/:id">
-                <Modal header={'Детали ингредиента'} onClose={handleCloseModal} >
-                    <IngredientDetails/>
-                </Modal>
-            </Route> */}
         </section>
     )
     }

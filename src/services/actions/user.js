@@ -128,6 +128,9 @@ export function updateToken(refreshToken) {
                 return result
             }
         })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 
@@ -252,6 +255,9 @@ export function logout() {
                     type: LOGOUT
                 })
             }
+        })
+        .catch((error) => {
+            console.error(error)
         })
     }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Redirect, useLocation } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
 import { getUser } from '../services/actions/user'

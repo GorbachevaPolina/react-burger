@@ -3,10 +3,8 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { useSelector, useDispatch } from 'react-redux'
 
 import styles from './profile.module.css'
-import { getUser, logout, updateToken, updateUser } from '../services/actions/user'
-import { getCookie } from '../utils/auth'
-import { GET_USER_FAILED } from '../services/actions/user'
-import { Redirect, useHistory } from 'react-router-dom'
+import { getUser, logout, updateUser } from '../services/actions/user'
+import { useHistory } from 'react-router-dom'
 
 const Profile = () => {
     const dispatch = useDispatch()
@@ -17,9 +15,6 @@ const Profile = () => {
         email: '',
         password: ''
     })
-    // const [nameValue, setNameValue] = useState('')
-    // const [emailValue, setEmailValue] = useState('')
-    // const [passwordValue, setPasswordValue] = useState('')
 
     const handleLogout = () => {
         dispatch(logout())

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import styles from './ingredient-details.module.css'
 import {useSelector, useDispatch} from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getCurrentIngredient } from '../../services/actions/current-ingredient'
+import { getCurrentIngredient, VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient'
 
 const IngredientDetails = () => {
     const dispatch = useDispatch()

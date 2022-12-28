@@ -1,15 +1,15 @@
 import React, {useState} from "react";
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import OrderDetails from "../order-details/order-details";
-import Modal from "../modal/modal";
-
-import { ADD_BUN, ADD_CONSTRUCTOR_INGREDIENT, MOVE_INGREDIENT, REMOVE_BUN } from "../../services/actions/burger-constructor";
 import { useSelector, useDispatch } from 'react-redux'
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from 'uuid';
 
+import OrderDetails from "../order-details/order-details";
 import ConstructorIngredient from "./constructor-ingredient";
+import Modal from "../modal/modal";
+
+import { ADD_BUN, ADD_CONSTRUCTOR_INGREDIENT, MOVE_INGREDIENT, REMOVE_BUN } from "../../services/actions/burger-constructor";
 import { getOrder } from "../../services/actions/order";
 import { DECREASE_COUNTER, INCREASE_COUNTER } from "../../services/actions/burger-ingredients";
 

@@ -1,4 +1,4 @@
-import { VIEW_CURRENT_INGREDIENT, STOP_VIEW_CURRENT_INGREDIENT, GET_CURRENT_INGREDIENT_FAILED, GET_CURRENT_INGREDIENT_REQUEST, GET_CURRENT_INGREDIENT_SUCCESS } from "../actions/current-ingredient"
+import { STOP_VIEW_CURRENT_INGREDIENT, GET_CURRENT_INGREDIENT_FAILED, GET_CURRENT_INGREDIENT_REQUEST, GET_CURRENT_INGREDIENT_SUCCESS } from "../actions/current-ingredient"
 
 const initialState = {
     currentIngredient: null,
@@ -9,12 +9,6 @@ const initialState = {
 
 export const currentIngredientReducer = (state = initialState, action) => {
     switch(action.type) {
-        case VIEW_CURRENT_INGREDIENT: {
-            return {
-                ...state,
-                currentIngredient: action.item
-            }
-        }
         case STOP_VIEW_CURRENT_INGREDIENT: {
             return {
                 ...state,
