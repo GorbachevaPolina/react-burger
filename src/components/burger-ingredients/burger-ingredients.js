@@ -1,20 +1,15 @@
 import React, {useState, useEffect} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
+import { Link, useLocation } from 'react-router-dom'
+import { useInView } from "react-intersection-observer";
+import { useSelector } from 'react-redux'
+
 import Ingredient from "./ingredient";
 
-import { useInView } from "react-intersection-observer";
-import { useSelector, useDispatch } from 'react-redux'
-import { getIngredients } from "../../services/actions/burger-ingredients";
-import { STOP_VIEW_CURRENT_INGREDIENT, VIEW_CURRENT_INGREDIENT } from "../../services/actions/current-ingredient";
-
 const BurgerIngredients = () => {
-    const dispatch = useDispatch();
+    const location = useLocation()
     const {burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed} = useSelector((store) => store.burgerIngredients)
-    
-    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const [refBun, inViewBun, entryBun] = useInView({threshold: 1});
     const [refSauce, inViewSauce, entrySauce] = useInView({threshold: 0.5});
@@ -33,25 +28,6 @@ const BurgerIngredients = () => {
                 break;
         }
     }
-
-    const handleOpenModal = (item) => {
-        dispatch({
-            type: VIEW_CURRENT_INGREDIENT,
-            item: item
-        })
-        setIsModalOpen(true)
-    }
-
-    const handleCloseModal = () => {
-        dispatch({
-            type: STOP_VIEW_CURRENT_INGREDIENT
-        })
-        setIsModalOpen(false)
-    }
-
-    useEffect(() => {
-        dispatch(getIngredients())
-    }, [dispatch])
     
     if(burgerIngredientsRequest) {
         return (<h1>Загрузка</h1>) 
@@ -80,7 +56,9 @@ const BurgerIngredients = () => {
                             burgerIngredients.map((item) => {
                                 if (item.type === 'bun') {
                                     return (
-                                        <Ingredient item={item} handleOpenModal={handleOpenModal} key={item._id}/>
+                                        <Link to={{pathname: `ingredients/${item._id}`, state: {background: location}}} className={styles.link} key={item._id}>
+                                            <Ingredient item={item}/>
+                                        </Link>
                                     )
                                 }
                             })
@@ -94,7 +72,9 @@ const BurgerIngredients = () => {
                             burgerIngredients.map((item) => {
                                 if (item.type === 'sauce') {
                                     return (
-                                        <Ingredient item={item} handleOpenModal={handleOpenModal} key={item._id}/>
+                                        <Link to={{pathname: `ingredients/${item._id}`, state: {background: location}}} className={styles.link} key={item._id}>
+                                            <Ingredient item={item}/>
+                                        </Link>
                                     )
                                 }
                             })
@@ -108,7 +88,9 @@ const BurgerIngredients = () => {
                             burgerIngredients.map((item) => {
                                 if (item.type === 'main') {
                                     return (
-                                        <Ingredient item={item} handleOpenModal={handleOpenModal} key={item._id}/>
+                                        <Link to={{pathname: `ingredients/${item._id}`, state: {background: location}}} className={styles.link} key={item._id}>
+                                            <Ingredient item={item}/>
+                                        </Link>
                                     )
                                 }
                             })
@@ -116,9 +98,6 @@ const BurgerIngredients = () => {
                     </ul>
                 </li>
             </ul>
-            {isModalOpen && <Modal header={'Детали ингредиента'} onClose={handleCloseModal}>
-                <IngredientDetails/>
-            </Modal>}
         </section>
     )
     }

@@ -1,21 +1,23 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import OrderDetails from "../order-details/order-details";
-import Modal from "../modal/modal";
-
-import { ADD_BUN, ADD_CONSTRUCTOR_INGREDIENT, MOVE_INGREDIENT, REMOVE_BUN } from "../../services/actions/burger-constructor";
 import { useSelector, useDispatch } from 'react-redux'
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from 'uuid';
 
+import OrderDetails from "../order-details/order-details";
 import ConstructorIngredient from "./constructor-ingredient";
+import Modal from "../modal/modal";
+
+import { ADD_BUN, ADD_CONSTRUCTOR_INGREDIENT, MOVE_INGREDIENT, REMOVE_BUN } from "../../services/actions/burger-constructor";
 import { getOrder } from "../../services/actions/order";
 import { DECREASE_COUNTER, INCREASE_COUNTER } from "../../services/actions/burger-ingredients";
+import { getUser } from "../../services/actions/user";
 
 const BurgerConstructor = () => {
     const { bun, main } = useSelector((store) => store.burgerConstructor)
     const { orderFailed } = useSelector((store) => store.order)
+    const { user } = useSelector((store) => store.user)
     const dispatch = useDispatch()
 
     const total = bun ? 2 * bun.price + main.reduce((prev, curr) => prev + curr.price, 0) : main.reduce((prev, curr) => prev + curr.price, 0)
@@ -74,6 +76,10 @@ const BurgerConstructor = () => {
             hoverIndex: hoverIndex
         })
     }
+
+    useEffect(() => {
+        dispatch(getUser())
+    }, [])
     
     return ( 
         <section className={`${styles.wrapper} mt-25 mb-10 pl-4`} ref={ref}>
@@ -110,7 +116,7 @@ const BurgerConstructor = () => {
                         {total}
                         <span className="ml-1"><CurrencyIcon type="primary" /></span>
                     </p>
-                    {total ? <Button htmlType="button" type="primary" size="large" onClick={handleOrder}>Оформить заказ</Button> : null}
+                    {total ? user ? <Button htmlType="button" type="primary" size="large" onClick={handleOrder}>Оформить заказ</Button> : <p className="text text_type_main-small">Авторизируйтесь, чтобы сделать заказ</p> : null}
                 </div>
                 {isModalOpen && <Modal header={null} onClose={handleCloseModal}>
                     {

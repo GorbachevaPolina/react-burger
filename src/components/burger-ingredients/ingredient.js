@@ -6,7 +6,7 @@ import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-c
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 
-const Ingredient = ({item, handleOpenModal}) => {
+const Ingredient = ({item}) => {
     const counter = useSelector((store) => store.burgerIngredients.counter[item._id])
     
     const [, ref] = useDrag({
@@ -14,7 +14,7 @@ const Ingredient = ({item, handleOpenModal}) => {
         item: { item: item }
     })
     return (
-        <li className={styles.ingredient_card} key={item._id} onClick={() => handleOpenModal(item)} ref={ref}>
+        <li className={styles.ingredient_card} key={item._id} ref={ref}>
             {counter ? <Counter count={counter} size="default" extraClass="m-1" /> : null}
             <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
             <p className="text text_type_digits-default mb-1">
@@ -27,8 +27,7 @@ const Ingredient = ({item, handleOpenModal}) => {
 }
 
 Ingredient.propTypes = {
-    item: dataShape.isRequired,
-    handleOpenModal: PropTypes.func.isRequired
+    item: dataShape.isRequired
 }
 
 export default Ingredient;
