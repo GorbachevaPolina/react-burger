@@ -11,13 +11,14 @@ const ForgotPassword = () => {
     const history = useHistory();
     const [emailValue, setEmailValue] = useState('');
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.preventDefaut()
         dispatch(forgotPassword(emailValue));
         history.replace({ pathname: '/reset-password' })
     }
 
     return (
-        <div className={styles.container}>
+        <form className={styles.container} onSubmit={handleClick}>
             <p className="text text_type_main-medium mb-6">Восстановление пароля</p>
             <EmailInput 
                 onChange={e => setEmailValue(e.target.value)}
@@ -27,14 +28,14 @@ const ForgotPassword = () => {
                 isIcon={false}
                 extraClass='mb-6'
             />
-            <Button htmlType="button" type="primary" size="medium" extraClass='mb-20' onClick={handleClick}>
+            <Button htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
                 Восстановить
             </Button>
             <p className="text text_type_main-default text_color_inactive">
                 Вспомнили пароль? 
                 <span><Link to='/login' className={styles.link}>Войти</Link></span>
             </p>
-        </div>
+        </form>
     )
 }
 

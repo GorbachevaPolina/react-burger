@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom'
@@ -13,35 +13,40 @@ import Register from '../../pages/register';
 import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import Profile from '../../pages/profile';
-import { ProtectedAuthRoute, ProtectedUnauthRoute } from '../protected-route';
+import { ProtectedRoute } from '../protected-route';
 import NotFound404 from '../../pages/not-found-404';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { STOP_VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
+import { getIngredients } from '../../services/actions/burger-ingredients';
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getIngredients())
+  }, [dispatch])
   return (
     <>
       <Router>
         <AppHeader />
         <Switch>
 
-          <ProtectedUnauthRoute path="/login" exact={true}>
+          <ProtectedRoute onlyForAuth={false} path="/login" exact={true}>
             <Login />
-          </ProtectedUnauthRoute>
-          <ProtectedUnauthRoute path="/register" exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute onlyForAuth={false} path="/register" exact={true}>
             <Register />
-          </ProtectedUnauthRoute>
-          <ProtectedUnauthRoute path="/forgot-password" exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute onlyForAuth={false} path="/forgot-password" exact={true}>
             <ForgotPassword />
-          </ProtectedUnauthRoute>
-          <ProtectedUnauthRoute path="/reset-password" exact={true}>
+          </ProtectedRoute>
+          <ProtectedRoute onlyForAuth={false} path="/reset-password" exact={true}>
             <ResetPassword />
-          </ProtectedUnauthRoute>
+          </ProtectedRoute>
 
-          <ProtectedAuthRoute path="/profile" exact={true}>
+          <ProtectedRoute onlyForAuth={true} path="/profile" exact={true}>
             <Profile />
-          </ProtectedAuthRoute>
+          </ProtectedRoute>
 
           <ModalSwitch />
         

@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import { Link, Redirect, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../services/actions/user'
 
 import styles from './form.module.css'
 
 const Login = () => {
-    const location = useLocation()
     const dispatch = useDispatch()
-    const { user } = useSelector((store) => store.user)
     const [registerInfo, setRegisterInfo] = useState({
         email: "",
         password: ""
@@ -20,14 +18,8 @@ const Login = () => {
         dispatch(login(registerInfo))
     }
 
-    if(user) {
-        return (
-            <Redirect to={ location.state?.from || '/' } />
-        )
-    }
-
     return (
-        <form className={styles.container}>
+        <form className={styles.container} onSubmit={handleLogin}>
             <p className="text text_type_main-medium mb-6">Вход</p>
             <EmailInput 
                 onChange={e => setRegisterInfo({...registerInfo, email: e.target.value})}
@@ -42,7 +34,7 @@ const Login = () => {
                 name={'password'}
                 extraClass='mb-6'
             />
-            <Button htmlType="button" type="primary" size="medium" extraClass='mb-20' onClick={handleLogin}>
+            <Button htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
                 Войти
             </Button>
             <p className="text text_type_main-default text_color_inactive mb-4">

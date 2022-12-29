@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Link, Redirect, useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { register } from '../services/actions/user'
 
@@ -8,8 +8,6 @@ import styles from './form.module.css'
 
 const Register = () => {
     const dispatch = useDispatch();
-    const location = useLocation()
-    const { user } = useSelector((store) => store.user)
     const [registerInfo, setRegisterInfo] = useState({
         email: "",
         password: "",
@@ -21,14 +19,8 @@ const Register = () => {
         dispatch(register(registerInfo))
     }
 
-    if(user) {
-        return (
-            <Redirect to={ location.state?.from || '/' } />
-        )
-    }
-
     return (
-        <form className={styles.container}>
+        <form className={styles.container} onSubmit={handleRegister}>
             <p className="text text_type_main-medium mb-6">Регистрация</p>
             <Input 
                 type={'text'}
@@ -51,7 +43,7 @@ const Register = () => {
                 name={'password'}
                 extraClass='mb-6'
             />
-            <Button htmlType="button" type="primary" size="medium" extraClass='mb-20' onClick={handleRegister}>
+            <Button htmlType="submit" type="primary" size="medium" extraClass='mb-20'>
                 Зарегистрироваться
             </Button>
             <p className="text text_type_main-default text_color_inactive mb-4">

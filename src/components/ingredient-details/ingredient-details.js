@@ -6,12 +6,15 @@ import { getCurrentIngredient, VIEW_CURRENT_INGREDIENT } from '../../services/ac
 
 const IngredientDetails = () => {
     const dispatch = useDispatch()
-    let data = useSelector((store) => store.currentIngredient.currentIngredient)
     const { id } = useParams()
+    const data = useSelector((store) => store.burgerIngredients.burgerIngredients).find((item) => item._id === id)
     
     useEffect(() => {
-        dispatch(getCurrentIngredient(id))
-    }, [])
+        dispatch({
+            type: VIEW_CURRENT_INGREDIENT,
+            item: data
+        })
+    }, [data])
     
     if (!data) {
         return null

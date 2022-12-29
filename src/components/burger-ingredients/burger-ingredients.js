@@ -3,13 +3,11 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
 import { Link, useLocation } from 'react-router-dom'
 import { useInView } from "react-intersection-observer";
-import { useSelector, useDispatch } from 'react-redux'
-import { getIngredients } from "../../services/actions/burger-ingredients";
+import { useSelector } from 'react-redux'
 
 import Ingredient from "./ingredient";
 
 const BurgerIngredients = () => {
-    const dispatch = useDispatch();
     const location = useLocation()
     const {burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed} = useSelector((store) => store.burgerIngredients)
 
@@ -30,10 +28,6 @@ const BurgerIngredients = () => {
                 break;
         }
     }
-
-    useEffect(() => {
-        dispatch(getIngredients())
-    }, [dispatch])
     
     if(burgerIngredientsRequest) {
         return (<h1>Загрузка</h1>) 

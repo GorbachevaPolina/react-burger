@@ -31,7 +31,8 @@ const Profile = () => {
         dispatch(logout())
     }
 
-    const handleInfoUpdate = () => {
+    const handleInfoUpdate = (e) => {
+        e.preventDefault()
         dispatch(updateUser(userInfo))
         setIsChanged(false)
     }
@@ -61,10 +62,6 @@ const Profile = () => {
                 name: user.name
             })
         }
-
-        if(!user) {
-            history.replace({pathname: '/login'})
-        }
     }, [user])
 
     useEffect(() => {
@@ -89,6 +86,7 @@ const Profile = () => {
                 </p>
             </div>
             <div>
+                <form onSubmit={handleInfoUpdate}>
                 <Input 
                     type={'text'}
                     placeholder={'Имя'}
@@ -118,10 +116,11 @@ const Profile = () => {
                 />
                 {isChanged ? (
                     <>
-                    <Button htmlType="button" type="primary" size="medium" onClick={handleInfoRevert} extraClass={styles.button}>Отмена</Button>
-                    <Button htmlType="button" type="primary" size="medium" onClick={handleInfoUpdate}>Сохранить</Button>
+                        <Button htmlType="button" type="primary" size="medium" onClick={handleInfoRevert} extraClass={styles.button}>Отмена</Button>
+                        <Button htmlType="submit" type="primary" size="medium">Сохранить</Button>
                     </>
                 ) : null}
+                </form>
 
                 <Switch>
                     <Route path="/profile/orders">

@@ -1,5 +1,6 @@
 import { deleteCookie, getCookie, setCookie } from "../../utils/auth";
 import { URL } from '../../utils/url'
+import { checkResponse } from "../../utils/check-response";
 
 export const REGISTER_USER_REQUEST = "REGISTER_USER_REQUEST";
 export const REGISTER_USER_FAILED = "REGISTER_USER_FAILED";
@@ -39,12 +40,7 @@ export function register(user) {
             },
             body: JSON.stringify(user)
         })
-        .then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-            return Promise.reject(`Ошибка ${response.status}`)
-        })
+        .then(checkResponse)
         .then((result) => {
             if(result.success) {
                 const token = result.accessToken.split('Bearer ')[1];
@@ -77,12 +73,7 @@ export function login(user) {
             },
             body: JSON.stringify(user)
         })
-        .then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-            return Promise.reject(`Ошибка ${response.status}`)
-        })
+        .then(checkResponse)
         .then((result) => {
             if(result.success) {
                 const token = result.accessToken.split('Bearer ')[1];
@@ -112,12 +103,7 @@ export function updateToken(refreshToken) {
             },
             body: JSON.stringify({token: refreshToken})
         })
-        .then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-            return Promise.reject(`Ошибка ${response.status}`)
-        })
+        .then(checkResponse)
         .then((result) => {
             if(result.success) {
                 const token = result.accessToken.split('Bearer ')[1];
@@ -146,12 +132,7 @@ export function getUserInfo(token) {
                 'Authorization': `Bearer ${token}`
             }
         })
-        .then((response) => {
-            if(response.ok) {
-                return response.json()
-            }
-            return Promise.reject(`Ошибка ${response.status}`)
-        })
+        .then(checkResponse)
         .then((result) => {
             if (result.success) {
                 dispatch({
@@ -198,12 +179,7 @@ export function updateUserInfo(token, newUserInfo) {
             },
             body: JSON.stringify(newUserInfo)
         })
-        .then((response) => {
-            if(response.ok) {
-                return response.json()
-            }
-            return Promise.reject(`Ошибка ${response.status}`)
-        })
+        .then(checkResponse)
         .then((result) => {
             if(result.success) {
                 dispatch({
@@ -241,12 +217,7 @@ export function logout() {
             },
             body: JSON.stringify({token: refreshToken})
         })
-        .then((response) => {
-            if(response.ok) {
-                return response.json()
-            }
-            return Promise.reject(`Ошибка ${response.status}`)
-        })
+        .then(checkResponse)
         .then((result) => {
             if(result.success) {
                 deleteCookie('token')
@@ -274,12 +245,7 @@ export function forgotPassword(email) {
             },
             body: JSON.stringify({email: email})
         })
-        .then((response) => {
-            if(response.ok) {
-                return response.json()
-            }
-            return Promise.reject(`Ошибка ${response.status}`)
-        })
+        .then(checkResponse)
         .then((result) => {
             if(result.success) {
                 dispatch({
@@ -307,12 +273,7 @@ export function resetPassword(password, code) {
             },
             body: JSON.stringify({password: password, token: code})
         })
-        .then((response) => {
-            if(response.ok) {
-                return response.json()
-            }
-            return Promise.reject(`Ошибка ${response.status}`)
-        })
+        .then(checkResponse)
         .then((result) => {
             if(result.success) {
                 dispatch({

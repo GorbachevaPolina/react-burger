@@ -72,7 +72,9 @@ const AppHeader = () => {
                         </Link>
                     </li>
                     <li className={styles.list_item}>
+                        <Link to="/">
                         <Logo />
+                        </Link>
                     </li>
                     <li className={styles.list_item}>
                         <Link to="/profile" className="p-5">

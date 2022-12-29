@@ -1,4 +1,5 @@
 import { URL } from "../../utils/url";
+import { checkResponse } from "../../utils/check-response";
 
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
@@ -16,12 +17,7 @@ export function getOrder(ingredients) {
             },
             body: JSON.stringify({'ingredients': ingredients})
         })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json()
-                  } 
-                  return Promise.reject(`Ошибка ${response.status}`)
-            })
+            .then(checkResponse)
             .then((result) => dispatch({
                 type: GET_ORDER_SUCCESS,
                 order: result['order']['number']
