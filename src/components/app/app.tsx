@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom'
@@ -20,9 +20,12 @@ import Modal from '../modal/modal';
 import { STOP_VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 
-function App() {
+import { Location } from 'history'; 
+
+const App : FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {
+    //@ts-ignore
     dispatch(getIngredients())
   }, [dispatch])
   return (
@@ -59,11 +62,12 @@ function App() {
 const ModalSwitch = () => {
   const dispatch = useDispatch()
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<{background: Location}>();
   const background = location.state && location.state.background;
 
-  const back = () => {
+  const back = () : void => {
     history.goBack();
+    //@ts-ignore
     dispatch({
       type: STOP_VIEW_CURRENT_INGREDIENT
     })

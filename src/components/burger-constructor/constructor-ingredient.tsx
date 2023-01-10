@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, FC } from 'react'
 import PropTypes from 'prop-types'
 import dataShape from '../../utils/types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,14 +6,21 @@ import { REMOVE_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-con
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { DECREASE_COUNTER } from '../../services/actions/burger-ingredients';
+import { TConstructorIngredient } from '../../services/types/ingredients';
 
-const ConstructorIngredient = ({item, moveIngredient, index}) => {
+type TConstructorIngredientProps = {
+    item: TConstructorIngredient;
+    moveIngredient: (dragIndex : number, hoverIndex : number) => void;
+    index: number;
+}
+
+const ConstructorIngredient : FC<TConstructorIngredientProps> = ({item, moveIngredient, index}) => {
     const dispatch = useDispatch();
-    const ref = useRef(null);
+    const ref = useRef<HTMLLIElement>(null);
 
     const [, drop] = useDrop({
         accept: 'card',
-        hover(item, monitor) {
+        hover(item : { id: string, index: number }, monitor) {
             if (!ref.current) {
                 return;
             }
@@ -28,14 +35,17 @@ const ConstructorIngredient = ({item, moveIngredient, index}) => {
             const hoverMiddleY =
                     (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            if (clientOffset) {
+                const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
+                if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                    return;
+                }
+                if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                    return;
+                }
             }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
+
             moveIngredient(dragIndex, hoverIndex);
             item.index = hoverIndex;
         }
@@ -50,7 +60,7 @@ const ConstructorIngredient = ({item, moveIngredient, index}) => {
 
     drag(drop(ref))
 
-    const handleDeleteElement = () => {
+    const handleDeleteElement = () : void => {
         dispatch({
             type: DECREASE_COUNTER,
             id: item._id
@@ -71,12 +81,6 @@ const ConstructorIngredient = ({item, moveIngredient, index}) => {
                  />
         </li>
     )
-}
-
-ConstructorIngredient.propTypes = {
-    item: dataShape.isRequired,
-    moveIngredient: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired
 }
 
 export default ConstructorIngredient;
