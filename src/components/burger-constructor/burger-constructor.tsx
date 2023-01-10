@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, FC} from "react";
 import styles from './burger-constructor.module.css'
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector, useDispatch } from 'react-redux'
@@ -14,17 +14,22 @@ import { getOrder } from "../../services/actions/order";
 import { DECREASE_COUNTER, INCREASE_COUNTER } from "../../services/actions/burger-ingredients";
 import { getUser } from "../../services/actions/user";
 
-const BurgerConstructor = () => {
+import { TIngredient, TConstructorIngredient } from "../../services/types/ingredients";
+
+const BurgerConstructor : FC = () => {
+    //@ts-ignore
     const { bun, main } = useSelector((store) => store.burgerConstructor)
+    //@ts-ignore
     const { orderFailed } = useSelector((store) => store.order)
+    //@ts-ignore
     const { user } = useSelector((store) => store.user)
     const dispatch = useDispatch()
 
-    const total = bun ? 2 * bun.price + main.reduce((prev, curr) => prev + curr.price, 0) : main.reduce((prev, curr) => prev + curr.price, 0)
+    const total : number = bun ? 2 * bun.price + main.reduce((prev : number, curr : TIngredient) => prev + curr.price, 0) : main.reduce((prev : number, curr : TIngredient) => prev + curr.price, 0)
 
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
-    const addIngredient = (item) => {
+    const addIngredient = (item : TIngredient) : void => {
         if (item.type === 'bun') {
             if (bun) {
                 dispatch({
@@ -54,22 +59,23 @@ const BurgerConstructor = () => {
 
     const [, ref] = useDrop({
         accept: ['bun', 'sauce', 'main'],
-        drop(item) {
+        drop(item : {item : TIngredient}) {
             addIngredient(item.item)
         }
     })
 
-    const handleOrder = () => {
+    const handleOrder = () : void => {
         setIsModalOpen(true)
-        const data = [bun._id, ...main.map((item) => item._id), bun._id]
+        const data = [bun._id, ...main.map((item : TIngredient) => item._id), bun._id]
+        //@ts-ignore
         dispatch(getOrder(data))
     }
 
-    const handleCloseModal = () => {
+    const handleCloseModal = () : void => {
         setIsModalOpen(false)
     }
 
-    const moveIngredient = (dragIndex, hoverIndex) => {
+    const moveIngredient = (dragIndex : number, hoverIndex : number) : void => {
         dispatch({
             type: MOVE_INGREDIENT,
             dragIndex: dragIndex,
@@ -78,6 +84,7 @@ const BurgerConstructor = () => {
     }
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(getUser())
     }, [])
     
@@ -93,7 +100,7 @@ const BurgerConstructor = () => {
 
                 <ul className={`${styles.varied_ingredients} custom-scroll`}>
                     {
-                        main.map((item, index) => {
+                        main.map((item : TConstructorIngredient, index : number) => {
                             return (
                                 <ConstructorIngredient item={item} moveIngredient={moveIngredient} index={index} key={item.constructor_id}/>
                             )

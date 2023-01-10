@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {FC} from 'react'
 import doneIcon from '../../images/done.png'
 import { useSelector } from 'react-redux'
 
-const OrderDetails = () => {
+const OrderDetails : FC = () => {
+    //@ts-ignore
     const orderNumber = useSelector((store) => store.order.order)
 
     return (

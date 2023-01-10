@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
@@ -6,13 +6,14 @@ import { useDispatch } from 'react-redux';
 import styles from './form.module.css'
 import { forgotPassword } from '../services/actions/user';
 
-const ForgotPassword = () => {
+const ForgotPassword : FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [emailValue, setEmailValue] = useState('');
+    const [emailValue, setEmailValue] = useState<string>('');
 
-    const handleClick = (e) => {
-        e.preventDefaut()
+    const handleClick = (e : React.FormEvent<HTMLFormElement>) : void => {
+        e.preventDefault()
+        //@ts-ignore
         dispatch(forgotPassword(emailValue));
         history.replace({ pathname: '/reset-password' })
     }

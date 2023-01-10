@@ -1,12 +1,13 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, FC} from 'react'
 import styles from './ingredient-details.module.css'
 import {useSelector, useDispatch} from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getCurrentIngredient, VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient'
+import { VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient'
 
-const IngredientDetails = () => {
+const IngredientDetails : FC = () => {
     const dispatch = useDispatch()
-    const { id } = useParams()
+    const { id } = useParams<{id?: string}>()
+    //@ts-ignore
     const data = useSelector((store) => store.burgerIngredients.burgerIngredients).find((item) => item._id === id)
     
     useEffect(() => {

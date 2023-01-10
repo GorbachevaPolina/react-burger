@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './app-header.module.css'
 import { useLocation, Link } from 'react-router-dom'
 
-const initialHeaderState = {
+import { THeaderState } from "../../services/types/header";
+
+const initialHeaderState : THeaderState = {
     home: {
         icon: "primary",
         text: ""
@@ -18,10 +20,10 @@ const initialHeaderState = {
     }
 }
 
-const AppHeader = () => {
+const AppHeader : FC = () => {
     const location = useLocation();
 
-    const [header, setHeader] = useState(initialHeaderState)
+    const [header, setHeader] = useState<THeaderState>(initialHeaderState)
 
     useEffect(() => {
         switch(location.pathname) {

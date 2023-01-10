@@ -1,12 +1,16 @@
-import React from "react";
-import PropTypes from 'prop-types'
-import dataShape from "../../utils/types";
+import React, { FC } from "react";
 import styles from './ingredient.module.css'
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
+import { TIngredient } from "../../services/types/ingredients";
 
-const Ingredient = ({item}) => {
+type TIngredientProps = {
+    item: TIngredient;
+};
+
+const Ingredient : FC<TIngredientProps> = ({item}) => {
+    //@ts-ignore
     const counter = useSelector((store) => store.burgerIngredients.counter[item._id])
     
     const [, ref] = useDrag({
@@ -24,10 +28,6 @@ const Ingredient = ({item}) => {
             <p className="text text_type_main-small">{item.name}</p>
         </li>
     )
-}
-
-Ingredient.propTypes = {
-    item: dataShape.isRequired
 }
 
 export default Ingredient;
