@@ -25,7 +25,7 @@ const BurgerConstructor : FC = () => {
     const { user } = useSelector((store) => store.user)
     const dispatch = useDispatch()
 
-    const total = bun ? 2 * bun.price + main.reduce((prev : number, curr : TIngredient) => prev + curr.price, 0) : main.reduce((prev : number, curr : TIngredient) => prev + curr.price, 0)
+    const total : number = bun ? 2 * bun.price + main.reduce((prev : number, curr : TIngredient) => prev + curr.price, 0) : main.reduce((prev : number, curr : TIngredient) => prev + curr.price, 0)
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 

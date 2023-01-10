@@ -1,6 +1,4 @@
 import React, { FC } from "react";
-import PropTypes from 'prop-types'
-import dataShape from "../../utils/types";
 import styles from './ingredient.module.css'
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";

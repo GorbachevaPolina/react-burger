@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { Link } from 'react-router-dom'
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
@@ -6,15 +6,18 @@ import { login } from '../services/actions/user'
 
 import styles from './form.module.css'
 
-const Login = () => {
+import { TLogin } from '../services/types/inputs';
+
+const Login : FC = () => {
     const dispatch = useDispatch()
-    const [registerInfo, setRegisterInfo] = useState({
+    const [registerInfo, setRegisterInfo] = useState<TLogin>({
         email: "",
         password: ""
     })
 
-    const handleLogin = (e) => {
+    const handleLogin = (e : React.FormEvent<HTMLFormElement>) : void => {
         e.preventDefault();
+        //@ts-ignore
         dispatch(login(registerInfo))
     }
 

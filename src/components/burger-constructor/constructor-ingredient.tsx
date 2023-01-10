@@ -1,6 +1,4 @@
 import React, { useRef, FC } from 'react'
-import PropTypes from 'prop-types'
-import dataShape from '../../utils/types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { REMOVE_CONSTRUCTOR_INGREDIENT } from '../../services/actions/burger-constructor';
 import { useDispatch } from 'react-redux';

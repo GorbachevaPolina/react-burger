@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,15 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './form.module.css'
 import { resetPassword } from '../services/actions/user';
 
-const ResetPassword = () => {
+const ResetPassword : FC = () => {
     const dispatch = useDispatch();
     const history = useHistory()
+    //@ts-ignore
     const { forgotPasswordSuccess } = useSelector((store) => store.user)
-    const [passwordValue, setPasswordValue] = useState('');
-    const [codeValue, setCodeValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState<string>('');
+    const [codeValue, setCodeValue] = useState<string>('');
 
-    const handleClick = (e) => {
+    const handleClick = (e : React.FormEvent<HTMLFormElement>) : void => {
         e.preventDefault()
+        //@ts-ignore
         dispatch(resetPassword(passwordValue, codeValue));
         history.replace({pathname: '/login'})
     }
