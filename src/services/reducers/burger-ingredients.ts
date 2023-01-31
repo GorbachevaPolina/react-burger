@@ -1,14 +1,25 @@
-import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_REQUEST, INCREASE_COUNTER, DECREASE_COUNTER } from "../actions/burger-ingredients"
+import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_REQUEST, INCREASE_COUNTER, DECREASE_COUNTER, TIngredientsActions } from "../actions/burger-ingredients"
+import { TIngredient } from "../types/ingredients"
 
+type TCounter = {
+    [name: string]: number;
+}
 
-const initialState = {
+type TIngredientsState = {
+    burgerIngredients: TIngredient[] | [];
+    burgerIngredientsRequest: boolean;
+    burgerIngredientsFailed: boolean;
+    counter: TCounter | null
+}
+
+const initialState: TIngredientsState = {
     burgerIngredients: [],
     burgerIngredientsRequest: false,
     burgerIngredientsFailed: false,
     counter: null
 }
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = initialState, action: TIngredientsActions): TIngredientsState => {
     switch(action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {
@@ -22,7 +33,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 burgerIngredientsRequest: false,
                 burgerIngredientsFailed: false,
                 burgerIngredients: action.ingredients,
-                counter: action.ingredients.reduce((obj, item) => (obj[item._id] = 0, obj) , {})
+                counter: action.ingredients.reduce((obj: TCounter, item) => (obj[item._id] = 0, obj) , {})
             }
         }
         case GET_INGREDIENTS_FAILED: {
@@ -38,7 +49,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 ...state,
                 counter: {
                     ...state.counter,
-                    [action.id]: state.counter[action.id] + 1
+                    [action.id]: state!.counter![action.id] + 1
                 }
             }
         }
@@ -47,7 +58,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 ...state,
                 counter: {
                     ...state.counter,
-                    [action.id]: state.counter[action.id] - 1
+                    [action.id]: state!.counter![action.id] - 1
                 }
             }
         }

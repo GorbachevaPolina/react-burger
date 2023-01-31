@@ -3,14 +3,14 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
 import { Link, useLocation } from 'react-router-dom'
 import { useInView } from "react-intersection-observer";
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
+import { useSelector } from "../../services/types/hooks";
 
 import Ingredient from "./ingredient";
 import { TIngredient } from "../../services/types/ingredients";
 
 const BurgerIngredients : FC = () => {
     const location = useLocation()
-    //@ts-ignore
     const {burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed} = useSelector((store) => store.burgerIngredients)
 
     const [refBun, inViewBun, entryBun] = useInView({threshold: 1});

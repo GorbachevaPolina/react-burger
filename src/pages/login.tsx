@@ -1,7 +1,8 @@
 import React, { useState, FC } from 'react'
 import { Link } from 'react-router-dom'
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import { useDispatch } from '../services/types/hooks';
 import { login } from '../services/actions/user'
 
 import styles from './form.module.css'
@@ -17,7 +18,6 @@ const Login : FC = () => {
 
     const handleLogin = (e : React.FormEvent<HTMLFormElement>) : void => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(login(registerInfo))
     }
 

@@ -1,12 +1,18 @@
-import { GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS } from "../actions/order"
+import { GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, TOrderActions } from "../actions/order"
 
-const initialState = {
+type TOrderState = {
+    order: number;
+    orderRequest: boolean;
+    orderFailed: boolean;
+}
+
+const initialState: TOrderState = {
     order: 0,
     orderRequest: false,
     orderFailed: false
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
     switch(action.type) {
         case GET_ORDER_REQUEST: {
             return {

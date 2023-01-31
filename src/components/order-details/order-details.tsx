@@ -1,9 +1,9 @@
 import React, {FC} from 'react'
 import doneIcon from '../../images/done.png'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
+import { useSelector } from '../../services/types/hooks'
 
 const OrderDetails : FC = () => {
-    //@ts-ignore
     const orderNumber = useSelector((store) => store.order.order)
 
     return (

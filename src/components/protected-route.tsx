@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FC } from "react";
 import { Route, Redirect, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../services/types/hooks";
 
 import { getUser } from '../services/actions/user'
 
@@ -12,13 +13,11 @@ type TProtectedRouteProps = {
 
 export const ProtectedRoute : FC<TProtectedRouteProps> = ({ onlyForAuth, children, ...rest}) => {
     const dispatch = useDispatch()
-    //@ts-ignore
     const { user } = useSelector((store) => store.user)
     const [isUserLoaded, setUserLoaded] = useState<boolean>(false);
     const location = useLocation<{from: {pathname: string}}>()
 
     const init = () => {
-        //@ts-ignore
         dispatch(getUser());
         setUserLoaded(true);
     }

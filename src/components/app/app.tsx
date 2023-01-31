@@ -2,7 +2,8 @@ import React, { useEffect, FC } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../services/types/hooks';
 
 import styles from './app.module.css'
 import AppHeader from '../app-header/app-header'
@@ -25,7 +26,6 @@ import { Location } from 'history';
 const App : FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    //@ts-ignore
     dispatch(getIngredients())
   }, [dispatch])
   return (
@@ -67,7 +67,6 @@ const ModalSwitch = () => {
 
   const back = () : void => {
     history.goBack();
-    //@ts-ignore
     dispatch({
       type: STOP_VIEW_CURRENT_INGREDIENT
     })

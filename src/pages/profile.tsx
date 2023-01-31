@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FC } from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch } from 'react-redux'
+// import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from '../services/types/hooks'
 
 import styles from './profile.module.css'
 import { getUser, logout, updateUser } from '../services/actions/user'
@@ -12,7 +13,6 @@ import { TFull } from '../services/types/inputs'
 const Profile : FC = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    //@ts-ignore
     const { user } = useSelector((store) => store.user)
     const [userInfo, setUserInfo] = useState<TFull>({
         name: '',
@@ -31,21 +31,19 @@ const Profile : FC = () => {
     }
 
     const handleLogout = () : void => {
-        //@ts-ignore
         dispatch(logout())
     }
 
     const handleInfoUpdate = (e : React.FormEvent<HTMLFormElement>) : void => {
         e.preventDefault()
-        //@ts-ignore
         dispatch(updateUser(userInfo))
         setIsChanged(false)
     }
 
     const handleInfoRevert = () : void => {
         setUserInfo({
-            email: user.email,
-            name: user.name,
+            email: user!.email,
+            name: user!.name,
             password: ''
         })
         setIsChanged(false)
@@ -70,7 +68,6 @@ const Profile : FC = () => {
     }, [user])
 
     useEffect(() => {
-        //@ts-ignore
         dispatch(getUser())
     }, [])
 

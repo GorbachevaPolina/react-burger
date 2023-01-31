@@ -1,0 +1,24 @@
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { Action, ActionCreator } from 'redux';
+import { TConstructorActions } from '../actions/burger-constructor';
+import { TIngredientsActions } from '../actions/burger-ingredients';
+import { TCurrentIngredientActions } from '../actions/current-ingredient'
+import { store } from '../../index';
+import { TOrderActions } from '../actions/order';
+import { TUserActions } from '../actions/user';
+
+export type RootState = ReturnType<typeof store.getState>;
+
+type TApplicationActions = 
+    TConstructorActions |
+    TIngredientsActions |
+    TCurrentIngredientActions |
+    TOrderActions |
+    TUserActions;
+
+// export type AppThunk<TReturn = void> = ActionCreator<
+//     ThunkAction<TReturn, Action, RootState, TApplicationActions>
+// >; 
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>
+export type AppDispatch = <TReturnType>(action: TApplicationActions | AppThunk) => TReturnType
+// export type AppDispatch = typeof store.dispatch;
