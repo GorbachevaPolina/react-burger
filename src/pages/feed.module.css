@@ -1,0 +1,86 @@
+.container {
+    display: flex;
+    gap: 60px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.left, .right {
+    flex: 1
+}
+
+.left {
+    padding-left: 50px;
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
+.order_container {
+    background-color: #1c1c21;
+    border-radius: 30px;
+    padding: 24px;
+    margin-bottom: 16px;
+}
+
+.order_head, .ingredients_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.ingredients_container li {
+    display: inline-block;
+    width: 76px;
+    height: 76px;
+    border: 3px solid #5440eb;
+    border-radius: 50%;
+    background-color: black;
+    margin: -10px;
+    position: relative;
+}
+
+.image {
+    display: block;
+    width: 76px;
+    height: 76px;
+    object-fit: cover;
+}
+
+
+.image_overlay_div, .image_overlay_p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.image_overlay_div {
+    opacity: 0.5;
+    width: 76px;
+    height: 76px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.image_overlay_p {
+    opacity: 1;
+    margin: 0;
+}
+
+.order_status {
+    display: flex;
+    gap: 36px;
+}
+
+.order_status div {
+    width: 35%;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+}

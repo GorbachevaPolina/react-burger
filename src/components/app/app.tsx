@@ -22,6 +22,8 @@ import { STOP_VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ing
 import { getIngredients } from '../../services/actions/burger-ingredients';
 
 import { Location } from 'history'; 
+import Feed from '../../pages/feed';
+import Order from '../../pages/order';
 
 const App : FC = () => {
   const dispatch = useDispatch()
@@ -71,6 +73,7 @@ const ModalSwitch = () => {
       type: STOP_VIEW_CURRENT_INGREDIENT
     })
   };
+  console.log(background)
   
   return (
     <>
@@ -83,11 +86,20 @@ const ModalSwitch = () => {
                 </DndProvider>
               </main>
         </Route>
-        <Route path="/ingredients/:id">
+
+        <Route path="/feed" exact={true}>
+          <Feed />
+        </Route>
+
+        <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails />
         </Route>
 
-        <Route path="*">
+        <Route path="/feed/:id" exact={true}>
+          <Order />
+        </Route>
+
+        <Route path="*" exact={true}>
             <NotFound404 />
           </Route>
       </Switch>
@@ -96,6 +108,14 @@ const ModalSwitch = () => {
         <Route path="/ingredients/:id"
           children={<Modal header={'Детали ингредиента'} onClose={back}>
                       <IngredientDetails />
+                    </Modal>}
+        />
+      }
+
+      {background && 
+        <Route path="/feed/:id"
+          children={<Modal header={null} onClose={back}>
+                      <Order />
                     </Modal>}
         />
       }

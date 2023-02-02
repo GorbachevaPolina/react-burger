@@ -1,0 +1,44 @@
+.order_container {
+    text-align: left;
+    min-width: 550px;
+    max-width: 700px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+}
+
+.ingredients_list {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.ingredient {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.icon {
+    vertical-align: middle;
+    margin-left: 3px;
+}
+
+.middle {
+    flex: 2;
+}
+
+.image {
+    border: 3px solid #5440eb;
+    border-radius: 50%;
+    width: 76px;
+    height: 76px;
+    object-fit: cover;
+}
+
+.order_bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

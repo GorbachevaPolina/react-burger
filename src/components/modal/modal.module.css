@@ -8,7 +8,7 @@
     background-color: #1c1c21;
     border-radius: 30px;
     text-align: center;
-    z-index: 1;
+    z-index: 1001;
 }
 
 .modal_content {
