@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import styles from './ingredient.module.css'
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-// import { useSelector } from "react-redux";
 import { useSelector } from "../../services/types/hooks";
 import { TIngredient } from "../../services/types/ingredients";
 

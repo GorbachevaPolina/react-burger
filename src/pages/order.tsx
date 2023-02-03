@@ -4,52 +4,30 @@ import { useParams } from 'react-router-dom'
 import { useSelector } from '../services/types/hooks'
 import { TOrder } from '../services/types/order'
 import styles from './order.module.css'
-import { useDispatch } from '../services/types/hooks'
 
-const testData = {
-    "ingredients": [
-      "60d3b41abdacab0026a733c6",
-      "60d3b41abdacab0026a733c9",
-      "60d3b41abdacab0026a733ca",
-      "60d3b41abdacab0026a733cc"
-    ],
-    "_id": "",
-    "status": "done",
-    "number": 113,
-    "createdAt": "2023-02-01T03:43:22.587Z",
-    "updatedAt": "2023-02-01T03:43:22.603Z",
-    "name": "Death Star Starship бургер"
-  }
-
-const getOrder = async (id: string) => {
-    let response = await fetch(`https://norma.nomoreparties.space/api/orders/${id}`)
-    let result = await response.json()
-    return result
-}
 
 const Order = () => {
     const { id } = useParams<{id: string}>();
-    // const data = useSelector((store) => store.ws.messages.orders).find((item: TOrder) => item.number === Number(id))
-    // const ingredients = useSelector((store) => store.burgerIngredients.burgerIngredients).filter((item) => data.ingredients.includes(item._id))
-    const [data, setData] = useState<TOrder>()
-    let order = useSelector((store) => store.ws.messages)?.orders.find((item: TOrder) => item.number === Number(id))
-    let ingredients = useSelector((store) => store.burgerIngredients.burgerIngredients).filter((item) => data?.ingredients.includes(item._id))
+    const [data, setData] = useState<TOrder>();
+    const order = useSelector((store) => store.ws.messages)?.orders.find((item: TOrder) => item.number === Number(id))
+    const ingredients = useSelector((store) => store.burgerIngredients.burgerIngredients).filter((item) => data?.ingredients.includes(item._id))
     let total = 0;
-    const dispatch = useDispatch()
+
     useEffect(() => {
         setData(order)
         if (!data) {
             const getOrder = async (id: string) => {
-                let response = await fetch(`https://norma.nomoreparties.space/api/orders/${id}`)
-                let result = await response.json()
-                setData(result.orders[0])
-                return result
+                try {
+                    let response = await fetch(`https://norma.nomoreparties.space/api/orders/${id}`)
+                    let result = await response.json()
+                    setData(result.orders[0])
+                    return result
+                } catch(error) {
+                    console.error((error as Error).message)
+                }
             }
             getOrder(id)
         }
-        // if(data) {
-        //     ingredients = ingredients.filter((item) => data?.ingredients.includes(item._id))
-        // }
     }, [])
 
     if (!data) {
@@ -72,22 +50,13 @@ const Order = () => {
             <p className="text text_type_main-medium">Состав:</p>
             <ul className={`${styles.ingredients_list} custom-scroll`}>
                 {
-                    // data.ingredients.map((item) => {
-                    //     const ingredientInfo = ingredients.find((elem) => elem._id === item)
-                    //     return ingredientInfo ? (
-                    //         <li>
-                    //             <img src={ingredientInfo.image_mobile}/>
-                    //             <p>{ingredientInfo.name}</p>
-                    //         </li>
-                    //     ) : null
-                    // })
                     ingredients.map((item) => {
                         const count = data["ingredients"].reduce((prev: number, curr: string) => {
                             return curr === item._id ? prev + 1 : prev
                         }, 0)
                         total += count * item.price;
                         return (
-                            <li className={`${styles.ingredient} mb-4`}>
+                            <li className={`${styles.ingredient} mb-4`} key={item._id}>
                                 <img src={item.image_mobile} className={styles.image}/>
                                 <p className={`${styles.middle} text text_type_main-default`}>{item.name}</p>
                                 <p className='mr-6'>

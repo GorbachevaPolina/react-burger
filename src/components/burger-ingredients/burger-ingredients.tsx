@@ -1,9 +1,8 @@
-import React, {useState, useEffect, FC} from "react";
+import React, {FC} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
 import { Link, useLocation } from 'react-router-dom'
 import { useInView } from "react-intersection-observer";
-// import { useSelector } from 'react-redux'
 import { useSelector } from "../../services/types/hooks";
 
 import Ingredient from "./ingredient";
@@ -35,7 +34,7 @@ const BurgerIngredients : FC = () => {
         return (<h1>Загрузка</h1>) 
     } else if (burgerIngredientsFailed) {
         return (<h1>Возникла ошибка, перезагрузите страницу</h1>)
-    } else{
+    } else {
     return (
         <section className={`${styles.wrapper} mb-10`}>
             <p className="text text_type_main-large mt-10 mb-5">Соберите бургер</p>

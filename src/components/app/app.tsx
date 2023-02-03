@@ -25,13 +25,11 @@ import { Location } from 'history';
 import Feed from '../../pages/feed';
 import Order from '../../pages/order';
 import ProfileOrders from '../../pages/profile-orders';
-import { WS_CONNECTION_START } from '../../services/actions/socket';
 
 const App : FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getIngredients())
-    //dispatch({type: WS_CONNECTION_START, payload: 'all'})
   }, [dispatch])
 
   return (

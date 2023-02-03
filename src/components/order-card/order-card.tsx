@@ -3,7 +3,6 @@ import { TData } from '../../services/types/order';
 import styles from './order-card.module.css'
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from '../../services/types/hooks';
-import { TIngredient } from '../../services/types/ingredients';
 import { Link, useLocation } from 'react-router-dom';
 
 type TOrderCardProps = {
@@ -14,16 +13,19 @@ type TOrderCardProps = {
 const OrderCard: FC<TOrderCardProps> = ({data, from}) => {
     const location = useLocation()
     const ingredients = useSelector((store) => store.burgerIngredients.burgerIngredients)
+    
     return (
         <>
-        {data["orders"].map((item) => {
-            const total = (ingredients as TIngredient[]).reduce((prev: number, curr: TIngredient) => {
-                if (item.ingredients.includes(curr._id)) 
-                    return prev + curr.price
-                else return prev
-            }, 0)
+        {data["orders"].map((item, index) => {
+            let total = 0;
+            ingredients.map((elem) => {
+                const count = item["ingredients"].reduce((prev: number, curr: string) => {
+                    return curr === elem._id ? prev + 1 : prev
+                }, 0)
+                total += count * elem.price;
+            })
             return (
-                <Link to={{pathname: `${from}/${item.number}`, state: {background: location}}} className={styles.link}>
+                <Link to={{pathname: `${from}/${item.number}`, state: {background: location}}} className={styles.link} key={index}>
                 <li className={styles.order_container}>
                     <p className={styles.order_head}>
                         <span className="text text_type_main-default">#{item.number}</span>
@@ -32,7 +34,7 @@ const OrderCard: FC<TOrderCardProps> = ({data, from}) => {
                         </span>
                     </p>
                     <p className="text text_type_main-medium">{item.name}</p>
-                    <p className={styles.ingredients_container}>
+                    <div className={styles.ingredients_container}>
                         <ul>
                             {
                                 item.ingredients.map((ingredient, index) => {
@@ -40,13 +42,13 @@ const OrderCard: FC<TOrderCardProps> = ({data, from}) => {
                                     if (ingredientInfo) {
                                         if (index < 5) {
                                             return (
-                                                <li className={styles.ingredient_image} style={{zIndex: 1000-index}}>
+                                                <li className={styles.ingredient_image} style={{zIndex: 1000-index}} key={index}>
                                                      <img src={ingredientInfo.image_mobile} className={styles.image} alt='ingredient'/>
                                                 </li>
                                             )
                                         } else if (index === 5) {
                                             return (
-                                            <li className={styles.ingredient_image}>
+                                            <li className={styles.ingredient_image} key={index}>
                                                     <img src={ingredientInfo.image_mobile} className={styles.image} alt='ingredient'/>
                                                     <div className={styles.image_overlay_div}>
                                                     </div>
@@ -59,7 +61,7 @@ const OrderCard: FC<TOrderCardProps> = ({data, from}) => {
                             }
                         </ul>
                     <span className="text text_type_digits-medium">{total}<CurrencyIcon type="primary" /></span>
-                    </p>
+                    </div>
                 </li>
                 </Link>
             )

@@ -1,38 +1,26 @@
 import React, { useState, useEffect, FC } from 'react'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-// import { useSelector, useDispatch } from 'react-redux'
 import { useSelector, useDispatch } from '../services/types/hooks'
 
 import styles from './profile.module.css'
-import { getUser, logout, updateUser } from '../services/actions/user'
-import { useHistory, Switch, Route } from 'react-router-dom'
-import NotFound404 from './not-found-404'
+import { getUser, updateUser } from '../services/actions/user'
 
 import { TFull } from '../services/types/inputs'
 import ProfileSide from '../components/profile-side/profile-side'
 
 const Profile : FC = () => {
     const dispatch = useDispatch()
-    const history = useHistory()
     const { user } = useSelector((store) => store.user)
     const [userInfo, setUserInfo] = useState<TFull>({
         name: '',
         email: '',
         password: ''
     })
-    const [isActive, setIsActive] = useState<{profile: boolean; orders: boolean}>({
-        profile: true,
-        orders: false
-    })
     const [isChanged, setIsChanged] = useState<boolean>(false)
 
     const onChange = (e : React.ChangeEvent<HTMLInputElement>) : void => {
         setUserInfo({...userInfo, [e.target.name]: e.target.value})
         setIsChanged(true)
-    }
-
-    const handleLogout = () : void => {
-        dispatch(logout())
     }
 
     const handleInfoUpdate = (e : React.FormEvent<HTMLFormElement>) : void => {
@@ -48,14 +36,6 @@ const Profile : FC = () => {
             password: ''
         })
         setIsChanged(false)
-    }
-
-    const handleRedirect = (path : string) : void => {
-        setIsActive({
-            profile: path === '/profile',
-            orders: path === '/profile/orders'
-        })
-        history.replace({pathname: path})
     }
 
     useEffect(() => {
@@ -74,21 +54,6 @@ const Profile : FC = () => {
 
     return (
         <div className={styles.container}>
-            {/* <div>
-                <p className={`text text_type_main-large mb-6 ${isActive.profile ? "" : "text_color_inactive"} ${styles.text}`} onClick={() => handleRedirect('/profile')}>
-                    Профиль
-                </p>
-                <p className={`text text_type_main-large mb-6 ${isActive.orders ? "" : "text_color_inactive"} ${styles.text}`} onClick={() => handleRedirect('/profile/orders')}>
-                    История заказов
-                </p>
-                <p className={`text text_type_main-large text_color_inactive ${styles.text}`} onClick={handleLogout}>
-                    Выход
-                </p>
-
-                <p className="text text_type_main-default text_color_inactive mt-20">
-                    В этом разделе вы можете изменить свои персональные данные
-                </p>
-            </div> */}
             <ProfileSide isActive={{profile: true, orders: false}}/>
             <div className={styles.profile_info}>
                 <form onSubmit={handleInfoUpdate}>
@@ -126,12 +91,6 @@ const Profile : FC = () => {
                     </>
                 ) : null}
                 </form>
-
-                {/* <Switch>
-                    <Route path="/profile/orders">
-                        <NotFound404 />
-                    </Route>
-                </Switch> */}
             </div>
         </div>
     )

@@ -25,7 +25,8 @@
 }
 
 .orders_container {
+    margin-top: 50px;
     max-height: 600px;
-    min-width: 600px;
+    width: 600px;
     overflow-y: scroll;
 }
