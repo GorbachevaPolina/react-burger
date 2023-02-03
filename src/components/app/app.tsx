@@ -24,12 +24,16 @@ import { getIngredients } from '../../services/actions/burger-ingredients';
 import { Location } from 'history'; 
 import Feed from '../../pages/feed';
 import Order from '../../pages/order';
+import ProfileOrders from '../../pages/profile-orders';
+import { WS_CONNECTION_START } from '../../services/actions/socket';
 
 const App : FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getIngredients())
+    //dispatch({type: WS_CONNECTION_START, payload: 'all'})
   }, [dispatch])
+
   return (
     <>
       <Router>
@@ -73,8 +77,7 @@ const ModalSwitch = () => {
       type: STOP_VIEW_CURRENT_INGREDIENT
     })
   };
-  console.log(background)
-  
+
   return (
     <>
       <Switch location={background || location}>
@@ -99,6 +102,14 @@ const ModalSwitch = () => {
           <Order />
         </Route>
 
+        <ProtectedRoute onlyForAuth={true} path="/profile/orders" exact={true}>
+            <ProfileOrders />
+          </ProtectedRoute>
+
+        <ProtectedRoute onlyForAuth={true} path="/profile/orders/:id" exact={true}>
+          <Order />
+        </ProtectedRoute>
+
         <Route path="*" exact={true}>
             <NotFound404 />
           </Route>
@@ -114,6 +125,14 @@ const ModalSwitch = () => {
 
       {background && 
         <Route path="/feed/:id"
+          children={<Modal header={null} onClose={back}>
+                      <Order />
+                    </Modal>}
+        />
+      }
+
+      {background && 
+        <ProtectedRoute onlyForAuth={true} path="/profile/orders/:id"
           children={<Modal header={null} onClose={back}>
                       <Order />
                     </Modal>}

@@ -9,6 +9,7 @@ import { useHistory, Switch, Route } from 'react-router-dom'
 import NotFound404 from './not-found-404'
 
 import { TFull } from '../services/types/inputs'
+import ProfileSide from '../components/profile-side/profile-side'
 
 const Profile : FC = () => {
     const dispatch = useDispatch()
@@ -73,7 +74,7 @@ const Profile : FC = () => {
 
     return (
         <div className={styles.container}>
-            <div>
+            {/* <div>
                 <p className={`text text_type_main-large mb-6 ${isActive.profile ? "" : "text_color_inactive"} ${styles.text}`} onClick={() => handleRedirect('/profile')}>
                     Профиль
                 </p>
@@ -87,8 +88,9 @@ const Profile : FC = () => {
                 <p className="text text_type_main-default text_color_inactive mt-20">
                     В этом разделе вы можете изменить свои персональные данные
                 </p>
-            </div>
-            <div>
+            </div> */}
+            <ProfileSide isActive={{profile: true, orders: false}}/>
+            <div className={styles.profile_info}>
                 <form onSubmit={handleInfoUpdate}>
                 <Input 
                     type={'text'}
@@ -125,11 +127,11 @@ const Profile : FC = () => {
                 ) : null}
                 </form>
 
-                <Switch>
+                {/* <Switch>
                     <Route path="/profile/orders">
                         <NotFound404 />
                     </Route>
-                </Switch>
+                </Switch> */}
             </div>
         </div>
     )

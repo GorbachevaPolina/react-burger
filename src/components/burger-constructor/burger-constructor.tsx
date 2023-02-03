@@ -16,6 +16,7 @@ import { DECREASE_COUNTER, INCREASE_COUNTER } from "../../services/actions/burge
 import { getUser } from "../../services/actions/user";
 
 import { TIngredient, TConstructorIngredient } from "../../services/types/ingredients";
+import { getCookie } from "../../utils/auth";
 
 const BurgerConstructor : FC = () => {
     const { bun, main } = useSelector((store) => store.burgerConstructor)
@@ -67,7 +68,10 @@ const BurgerConstructor : FC = () => {
     const handleOrder = () : void => {
         setIsModalOpen(true)
         const data = [bun!._id, ...main.map((item : TIngredient) => item._id), bun!._id]
-        dispatch(getOrder(data))
+        const token = getCookie('token')
+        if (token) {
+            dispatch(getOrder(data, token))
+        }
     }
 
     const handleCloseModal = () : void => {

@@ -6,15 +6,17 @@ import { TCurrentIngredientActions } from '../actions/current-ingredient'
 import { store } from '../../index';
 import { TOrderActions } from '../actions/order';
 import { TUserActions } from '../actions/user';
+import { TWSActions } from '../actions/socket';
 
 export type RootState = ReturnType<typeof store.getState>;
 
-type TApplicationActions = 
+export type TApplicationActions = 
     TConstructorActions |
     TIngredientsActions |
     TCurrentIngredientActions |
     TOrderActions |
-    TUserActions;
+    TUserActions | 
+    TWSActions
 
 // export type AppThunk<TReturn = void> = ActionCreator<
 //     ThunkAction<TReturn, Action, RootState, TApplicationActions>

@@ -1,11 +1,15 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import { useSelector } from '../services/types/hooks';
 import { TIngredient } from '../services/types/ingredients';
 import styles from './feed.module.css'
 import { Link, useLocation } from 'react-router-dom';
+import { TData, TOrder } from '../services/types/order';
+import OrderCard from '../components/order-card/order-card';
+import { useDispatch } from '../services/types/hooks';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/socket';
 
-const testData = {
+const testData: TData = {
     "success": true,
     "orders": [
         {
@@ -82,6 +86,24 @@ const testData = {
 const Feed: FC = () => {
     const location = useLocation()
     const ingredients = useSelector((store) => store.burgerIngredients.burgerIngredients)
+    const {wsConnected, messages, error} = useSelector((store) => store.ws)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch({type: WS_CONNECTION_START, payload: '/all' })
+
+        return () => {
+            dispatch({ type: WS_CONNECTION_CLOSED })
+        }
+    }, [])
+
+    if(error) {
+        return <h1>Ошибка. Перезагрузите страницу</h1>
+    }
+
+    if (!wsConnected || !messages) {
+        return <h1>Загрузка</h1>
+    }
 
     return  (
         <>
@@ -89,7 +111,8 @@ const Feed: FC = () => {
         <div className={styles.container}>
             <div className={`${styles.left} custom-scroll`}>
                 <ul>
-                    {
+                    <OrderCard data={messages} from={'feed'}/>
+                    {/* {
                         testData["orders"].map((item) => {
                             const total = (ingredients as TIngredient[]).reduce((prev: number, curr: TIngredient) => {
                                 if (item.ingredients.includes(curr._id)) 
@@ -138,35 +161,39 @@ const Feed: FC = () => {
                                 </Link>
                             )
                         })
-                    }
+                    } */}
                 </ul>
             </div>
             <div className={styles.right}>
                 <section className={`${styles.order_status} mb-15`}>
                     <div>
                         <p className="text text_type_main-medium mb-6">Готовы:</p>
+                        <div className={styles.status}>
                         {
-                            testData["orders"].map((item) => {
+                            messages["orders"].map((item: TOrder) => {
                                 return item["status"] === 'done' ? <p className="text text_type_digits-default mb-2">{item.number}</p> : null
                             })
                         }
+                        </div>
                     </div>
                     <div>
                         <p className="text text_type_main-medium mb-6">В работе:</p>
+                        <div className={styles.status}>
                         {
-                            testData["orders"].map((item) => {
+                            messages["orders"].map((item: TOrder) => {
                                 return item["status"] === 'pending' ? <p className="text text_type_digits-default mb-2">{item.number}</p> : null
                             })
                         }
+                        </div>
                     </div>
                 </section>
                 <section className='mb-15'>
                     <p className="text text_type_main-medium">Выполнено за все время:</p>
-                    <p className="text text_type_digits-large">{testData["total"]}</p>
+                    <p className="text text_type_digits-large">{messages["total"]}</p>
                 </section>
                 <section>
                     <p className="text text_type_main-medium">Выполнено за сегодня</p>
-                    <p className="text text_type_digits-large">{testData["totalToday"]}</p>
+                    <p className="text text_type_digits-large">{messages["totalToday"]}</p>
                 </section>
             </div>
         </div>

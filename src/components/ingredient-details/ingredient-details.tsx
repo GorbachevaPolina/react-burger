@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import { VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient'
 
 const IngredientDetails : FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() 
     const { id } = useParams<{id?: string}>()
     const data = useSelector((store) => store.burgerIngredients.burgerIngredients).find((item) => item._id === id)
     

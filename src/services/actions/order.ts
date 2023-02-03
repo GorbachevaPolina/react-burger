@@ -24,7 +24,7 @@ export type TOrderActions =
     IGetOrderRequestAction |
     IGetOrderSuccessAction;
 
-export function getOrder(ingredients: string[]): AppThunk {
+export function getOrder(ingredients: string[], token: string): AppThunk {
     return function(dispatch: AppDispatch) {
         dispatch({
             type: GET_ORDER_REQUEST
@@ -33,6 +33,7 @@ export function getOrder(ingredients: string[]): AppThunk {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({'ingredients': ingredients})
         })

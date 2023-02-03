@@ -1,8 +1,10 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from '../services/types/hooks'
+import { TOrder } from '../services/types/order'
 import styles from './order.module.css'
+import { useDispatch } from '../services/types/hooks'
 
 const testData = {
     "ingredients": [
@@ -19,31 +21,58 @@ const testData = {
     "name": "Death Star Starship бургер"
   }
 
+const getOrder = async (id: string) => {
+    let response = await fetch(`https://norma.nomoreparties.space/api/orders/${id}`)
+    let result = await response.json()
+    return result
+}
+
 const Order = () => {
-    const ingredients = useSelector((store) => store.burgerIngredients.burgerIngredients).filter((item) => testData.ingredients.includes(item._id))
+    const { id } = useParams<{id: string}>();
+    // const data = useSelector((store) => store.ws.messages.orders).find((item: TOrder) => item.number === Number(id))
+    // const ingredients = useSelector((store) => store.burgerIngredients.burgerIngredients).filter((item) => data.ingredients.includes(item._id))
+    const [data, setData] = useState<TOrder>()
+    let order = useSelector((store) => store.ws.messages)?.orders.find((item: TOrder) => item.number === Number(id))
+    let ingredients = useSelector((store) => store.burgerIngredients.burgerIngredients).filter((item) => data?.ingredients.includes(item._id))
     let total = 0;
-    // useEffect(() => {
-    //     const data = ingredients.filter((item) => testData.ingredients.includes(item._id))
-    //     // data.forEach((item) => {return {...item, testData["ingredients"].reduce((prev, curr) => prev + curr), 0}})
-    // }, [ingredients])
+    const dispatch = useDispatch()
+    useEffect(() => {
+        setData(order)
+        if (!data) {
+            const getOrder = async (id: string) => {
+                let response = await fetch(`https://norma.nomoreparties.space/api/orders/${id}`)
+                let result = await response.json()
+                setData(result.orders[0])
+                return result
+            }
+            getOrder(id)
+        }
+        // if(data) {
+        //     ingredients = ingredients.filter((item) => data?.ingredients.includes(item._id))
+        // }
+    }, [])
+
+    if (!data) {
+        return null;
+    }
 
     return (
         <div className={styles.order_container}>
-            <p className="text text_type_digits-default mb-5">#{testData.number}</p>
-            <p className="text text_type_main-medium mb-3">{testData.name}</p>
+            <p className="text text_type_digits-default mb-5">#{data.number}</p>
+            <p className="text text_type_main-medium mb-3">{data.name}</p>
             {
-                testData.status === 'done' ?
+                data.status === 'done' ?
                     <p className="text text_type_main-small mb-10">Выполнен</p> :
-                    testData.status === 'pending' ?
+                    data.status === 'pending' ?
                     <p className="text text_type_main-small mb-10">В работе</p> :
-                    testData.status === 'created' ?
+                    data.status === 'created' ?
                     <p className="text text_type_main-small mb-10">Создан</p> :
                     null
             }
             <p className="text text_type_main-medium">Состав:</p>
             <ul className={`${styles.ingredients_list} custom-scroll`}>
                 {
-                    // testData.ingredients.map((item) => {
+                    // data.ingredients.map((item) => {
                     //     const ingredientInfo = ingredients.find((elem) => elem._id === item)
                     //     return ingredientInfo ? (
                     //         <li>
@@ -53,7 +82,7 @@ const Order = () => {
                     //     ) : null
                     // })
                     ingredients.map((item) => {
-                        const count = testData["ingredients"].reduce((prev, curr) => {
+                        const count = data["ingredients"].reduce((prev: number, curr: string) => {
                             return curr === item._id ? prev + 1 : prev
                         }, 0)
                         total += count * item.price;
@@ -71,7 +100,7 @@ const Order = () => {
                 }
             </ul>
             <section className={styles.order_bottom}>
-                <FormattedDate date={new Date(testData.createdAt)} className="text text_type_main-default text_color_inactive"/>
+                <FormattedDate date={new Date(data.createdAt)} className="text text_type_main-default text_color_inactive"/>
                 <p className="text text_type_digits-default">
                     {total}
                     <span className={styles.icon}><CurrencyIcon type="primary" /></span>

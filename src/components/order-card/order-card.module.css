@@ -1,8 +1,3 @@
-.container {
-    display: flex;
-    gap: 60px;
-}
-
 ul {
     list-style: none;
     padding: 0;
@@ -14,21 +9,11 @@ ul {
 
 .left {
     padding-left: 50px;
-    max-height: 840px;
+    max-height: 600px;
     overflow-y: scroll;
 }
-.order_status {
-    display: flex;
-    gap: 36px;
-}
 
-.status {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
-}
-
-/* .order_container {
+.order_container {
     background-color: #1c1c21;
     border-radius: 30px;
     padding: 24px;
@@ -93,4 +78,4 @@ ul {
 .link {
     text-decoration: none;
     color: white;
-} */
+}

@@ -8,6 +8,8 @@
     transform: translate(-50%, -50%);
 
     min-width: 900px;
+
+    align-items: center;
 }
 
 .text:hover {
@@ -16,4 +18,14 @@
 
 .button {
     margin-right: 10px;
+}
+
+.profile_info {
+    min-width: 600px;
+}
+
+.orders_container {
+    max-height: 600px;
+    min-width: 600px;
+    overflow-y: scroll;
 }
