@@ -1,10 +1,9 @@
 import React, {FC, useEffect} from 'react';
-import { useSelector } from '../services/types/hooks';
 import styles from './feed.module.css'
 import { TOrder } from '../services/types/order';
 import OrderCard from '../components/order-card/order-card';
-import { useDispatch } from '../services/types/hooks';
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/socket';
+import { useDispatch, useSelector } from '../services/types/hooks';
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/action-types/socket-actions';
 
 const Feed: FC = () => {
     const {wsConnected, messages, error} = useSelector((store) => store.ws)
@@ -38,7 +37,7 @@ const Feed: FC = () => {
                         <p className="text text_type_main-medium mb-6">Готовы:</p>
                         <div className={styles.status}>
                         {
-                            messages["orders"].map((item: TOrder) => {
+                            messages["orders"].map((item) => {
                                 return item["status"] === 'done' ? <p className="text text_type_digits-default mb-2" key={item.number}>{item.number}</p> : null
                             })
                         }
@@ -48,7 +47,7 @@ const Feed: FC = () => {
                         <p className="text text_type_main-medium mb-6">В работе:</p>
                         <div className={styles.status}>
                         {
-                            messages["orders"].map((item: TOrder) => {
+                            messages["orders"].map((item) => {
                                 return item["status"] === 'pending' ? <p className="text text_type_digits-default mb-2" key={item.number}>{item.number}</p> : null
                             })
                         }

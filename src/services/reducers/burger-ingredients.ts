@@ -1,5 +1,6 @@
-import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_REQUEST, INCREASE_COUNTER, DECREASE_COUNTER, TIngredientsActions } from "../actions/burger-ingredients"
+import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_REQUEST, INCREASE_COUNTER, DECREASE_COUNTER } from "../action-types/burger-ingredients-actions"
 import { TIngredient } from "../types/ingredients"
+import { TIngredientsActions } from "../actions/burger-ingredients"
 
 type TCounter = {
     [name: string]: number;

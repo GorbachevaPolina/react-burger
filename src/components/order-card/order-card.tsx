@@ -19,7 +19,7 @@ const OrderCard: FC<TOrderCardProps> = ({data, from}) => {
         {data["orders"].map((item, index) => {
             let total = 0;
             ingredients.map((elem) => {
-                const count = item["ingredients"].reduce((prev: number, curr: string) => {
+                const count = item["ingredients"].reduce((prev, curr) => {
                     return curr === elem._id ? prev + 1 : prev
                 }, 0)
                 total += count * elem.price;

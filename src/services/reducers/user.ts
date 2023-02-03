@@ -5,9 +5,9 @@ import {
     UPDATE_USER_INFO_FAILED, UPDATE_USER_INFO_REQUEST, UPDATE_USER_INFO_SUCCESS,
     FORGOT_PASSWORD_FAILED, FORGOT_PASSWORD_REQUEST, FORGOT_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILED, RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS,
-    LOGOUT,
-    TUserActions
-} from "../actions/user"
+    LOGOUT
+} from "../action-types/user-actions"
+import { TUserActions } from '../actions/user'
 
 type TUserInfo = {
     name: string;

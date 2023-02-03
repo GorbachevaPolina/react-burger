@@ -1,4 +1,5 @@
-import { GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, TOrderActions } from "../actions/order"
+import { TOrderActions } from "../actions/order"
+import { GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS } from '../action-types/order-actions'
 
 type TOrderState = {
     order: number;

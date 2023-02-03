@@ -1,10 +1,12 @@
+import { 
+    ADD_CONSTRUCTOR_INGREDIENT,
+    REMOVE_CONSTRUCTOR_INGREDIENT,
+    ADD_BUN,
+    REMOVE_BUN,
+    MOVE_INGREDIENT
+} from "../action-types/burger-constructer-actions";
 import { TIngredient } from "../types/ingredients"
 
-export const ADD_CONSTRUCTOR_INGREDIENT: 'ADD_CONSTRUCTOR_INGREDIENT' = 'ADD_CONSTRUCTOR_INGREDIENT'
-export const REMOVE_CONSTRUCTOR_INGREDIENT: 'REMOVE_CONSTRUCTOR_INGREDIENT' = 'REMOVE_CONSTRUCTOR_INGREDIENT'
-export const ADD_BUN: 'ADD_BUN' = 'ADD_BUN'
-export const REMOVE_BUN: 'REMOVE_BUN' = 'REMOVE_BUN'
-export const MOVE_INGREDIENT: 'MOVE_INGREDIENT' = 'MOVE_INGREDIENT'
 
 export interface IAddConstructorIngredientAction {
     readonly type: typeof ADD_CONSTRUCTOR_INGREDIENT;

@@ -1,10 +1,7 @@
 import { URL } from "../../utils/url";
 import { checkResponse } from "../../utils/check-response";
 import { AppDispatch, AppThunk } from "../types/store";
-
-export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
-export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED';
-export const GET_ORDER_REQUEST: 'GET_ORDER_REQUEST' = 'GET_ORDER_REQUEST';
+import { GET_ORDER_SUCCESS, GET_ORDER_FAILED, GET_ORDER_REQUEST } from "../action-types/order-actions";
 
 export interface IGetOrderSuccessAction {
     readonly type: typeof GET_ORDER_SUCCESS;

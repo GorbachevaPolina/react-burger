@@ -3,7 +3,7 @@ import OrderCard from '../components/order-card/order-card'
 import ProfileSide from '../components/profile-side/profile-side'
 import styles from './profile.module.css'
 import { useDispatch, useSelector } from '../services/types/hooks'
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/socket'
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/action-types/socket-actions'
 import { getCookie } from '../utils/auth'
 
 const ProfileOrders: FC = () => { 

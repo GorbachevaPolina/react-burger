@@ -1,17 +1,19 @@
 import type { Middleware, MiddlewareAPI } from "redux";
 import { TWSActions } from "../actions/socket";
 import type { TApplicationActions, AppDispatch, RootState } from '../types/store'
+import { TWS } from "../types/ws";
 
 const wsUrl = "wss://norma.nomoreparties.space/orders"
 
-export const socketMiddleware = (): Middleware => {
+export const socketMiddleware = (wsActions: TWS): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
         return next => (action: TWSActions) => {
             const { dispatch } = store;
             const { type } = action;
+            const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
        
-            if (type === `WS_CONNECTION_START`) {
+            if (type === wsInit) {
               if (socket !== null) {
                 socket.close();
               }
@@ -20,25 +22,25 @@ export const socketMiddleware = (): Middleware => {
             
             if (socket) {
               socket.onopen = event => {
-                dispatch({ type: `WS_CONNECTION_SUCCESS`, payload: event });
+                dispatch({ type: onOpen, payload: event });
               };
               socket.onerror = event => {
-                dispatch({ type: 'WS_CONNECTION_ERROR', payload: event });
+                dispatch({ type: onError, payload: event });
               };
               socket.onmessage = event => {
                 const { data } = event;
-                dispatch({ type: 'WS_GET_MESSAGE', payload: data });
+                dispatch({ type: onMessage, payload: data });
               };
               socket.onclose = event => {
-                dispatch({ type: 'WS_CONNECTION_CLOSED' });
+                dispatch({ type: onClose });
               };
       
-              if (type === 'WS_SEND_MESSAGE') {
+              if (type === wsSendMessage) {
                 const message = action.payload;
                 socket.send(JSON.stringify(message));
               }
 
-              if (type === "WS_CONNECTION_CLOSED") {
+              if (type === onClose) {
                 if (socket !== null) {
                   socket.close();
                 }

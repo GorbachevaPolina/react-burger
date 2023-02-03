@@ -1,4 +1,5 @@
-import { STOP_VIEW_CURRENT_INGREDIENT, TCurrentIngredientActions, VIEW_CURRENT_INGREDIENT } from "../actions/current-ingredient"
+import { STOP_VIEW_CURRENT_INGREDIENT, VIEW_CURRENT_INGREDIENT } from "../action-types/current-ingredient-actions";
+import { TCurrentIngredientActions } from "../actions/current-ingredient"
 import { TIngredient } from "../types/ingredients"
 
 type TCurrentIngredientState = {

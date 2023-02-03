@@ -2,7 +2,7 @@ import React, {useEffect, FC} from 'react'
 import styles from './ingredient-details.module.css'
 import { useSelector, useDispatch } from '../../services/types/hooks'
 import { useParams } from 'react-router-dom'
-import { VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient'
+import { VIEW_CURRENT_INGREDIENT } from '../../services/action-types/current-ingredient-actions'
 
 const IngredientDetails : FC = () => {
     const dispatch = useDispatch() 

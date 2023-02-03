@@ -2,12 +2,14 @@ import { URL } from "../../utils/url";
 import { checkResponse } from "../../utils/check-response";
 import { TIngredient } from "../types/ingredients";
 import { AppDispatch, AppThunk } from "../types/store";
+import { 
+    GET_INGREDIENTS_SUCCESS,
+    GET_INGREDIENTS_FAILED,
+    GET_INGREDIENTS_REQUEST,
+    INCREASE_COUNTER,
+    DECREASE_COUNTER
+} from "../action-types/burger-ingredients-actions";
 
-export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_FAILED: 'GET_INGREDIENTS_FAILED' = 'GET_INGREDIENTS_FAILED';
-export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
-export const INCREASE_COUNTER: 'INCREASE_COUNTER' = 'INCREASE_COUNTER';
-export const DECREASE_COUNTER: 'DECREASE_COUNTER' = 'DECREASE_COUNTER';
 
 export interface IGetIngredientsSuccessAction {
     readonly type: typeof GET_INGREDIENTS_SUCCESS;

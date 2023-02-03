@@ -18,9 +18,6 @@ export type TApplicationActions =
     TUserActions | 
     TWSActions
 
-// export type AppThunk<TReturn = void> = ActionCreator<
-//     ThunkAction<TReturn, Action, RootState, TApplicationActions>
-// >; 
+
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>
 export type AppDispatch = <TReturnType>(action: TApplicationActions | AppThunk) => TReturnType
-// export type AppDispatch = typeof store.dispatch;

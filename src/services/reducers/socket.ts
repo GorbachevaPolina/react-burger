@@ -1,9 +1,10 @@
-import { TWSActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../actions/socket"
-import { TOrder } from "../types/order";
+import { TWSActions } from "../actions/socket"
+import { TData, TOrder } from "../types/order";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from '../action-types/socket-actions'
 
 type TWSState = {
     wsConnected: boolean;
-    messages: TOrder | null;
+    messages: TData | null;
 
     error?: Event;
 }
@@ -41,7 +42,7 @@ export const wsReducer = (state = initialState, action: TWSActions) => {
             return {
                 ...state,
                 error: undefined,
-                messages: JSON.parse(action.payload)
+                messages: JSON.parse(action.payload) as TData
             }
         }
         default: {

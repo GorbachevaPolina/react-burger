@@ -18,7 +18,7 @@ import { ProtectedRoute } from '../protected-route';
 import NotFound404 from '../../pages/not-found-404';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
-import { STOP_VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
+import { STOP_VIEW_CURRENT_INGREDIENT } from '../../services/action-types/current-ingredient-actions';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 
 import { Location } from 'history'; 

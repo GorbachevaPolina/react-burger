@@ -51,7 +51,7 @@ const Order = () => {
             <ul className={`${styles.ingredients_list} custom-scroll`}>
                 {
                     ingredients.map((item) => {
-                        const count = data["ingredients"].reduce((prev: number, curr: string) => {
+                        const count = data["ingredients"].reduce((prev, curr) => {
                             return curr === item._id ? prev + 1 : prev
                         }, 0)
                         total += count * item.price;

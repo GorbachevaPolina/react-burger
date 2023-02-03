@@ -54,7 +54,7 @@ const BurgerIngredients : FC = () => {
                     <p className="text text_type_main-medium mb-6">Булки</p>
                     <ul className={`${styles.ingredients_section} ml-4 mb-10`}>
                         {
-                            burgerIngredients.map((item : TIngredient) => {
+                            burgerIngredients.map((item) => {
                                 if (item.type === 'bun') {
                                     return (
                                         <Link to={{pathname: `ingredients/${item._id}`, state: {background: location}}} className={styles.link} key={item._id}>
@@ -70,7 +70,7 @@ const BurgerIngredients : FC = () => {
                     <p className="text text_type_main-medium mb-6">Соусы</p>
                     <ul className={`${styles.ingredients_section} ml-4 mb-10`}>
                         {
-                            burgerIngredients.map((item : TIngredient) => {
+                            burgerIngredients.map((item) => {
                                 if (item.type === 'sauce') {
                                     return (
                                         <Link to={{pathname: `ingredients/${item._id}`, state: {background: location}}} className={styles.link} key={item._id}>
@@ -86,7 +86,7 @@ const BurgerIngredients : FC = () => {
                     <p className="text text_type_main-medium mb-6">Начинка</p>
                     <ul className={`${styles.ingredients_section} ml-4 mb-10`}>
                         {
-                            burgerIngredients.map((item : TIngredient) => {
+                            burgerIngredients.map((item) => {
                                 if (item.type === 'main') {
                                     return (
                                         <Link to={{pathname: `ingredients/${item._id}`, state: {background: location}}} className={styles.link} key={item._id}>
