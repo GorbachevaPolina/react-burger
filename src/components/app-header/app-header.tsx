@@ -30,7 +30,7 @@ const AppHeader : FC = () => {
             case "/": 
                 setHeader(initialHeaderState)
                 break;
-            case "/orders":
+            case "/feed":
                 setHeader({
                     ...initialHeaderState,
                     orders: {
@@ -68,7 +68,7 @@ const AppHeader : FC = () => {
                             <BurgerIcon type={header.home.icon} />
                             <p className={`text text_type_main-default ${header.home.text} ml-2`}>Конструктор</p>
                         </Link> 
-                        <Link to="/orders" className="ml-2 p-5">
+                        <Link to="/feed" className="ml-2 p-5">
                             <ListIcon type={header.orders.icon} />
                             <p className={`text text_type_main-default ${header.orders.text} ml-2`}>Лента заказов</p>
                         </Link>

@@ -6,9 +6,39 @@ import {
     FORGOT_PASSWORD_FAILED, FORGOT_PASSWORD_REQUEST, FORGOT_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILED, RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS,
     LOGOUT
-} from "../actions/user"
+} from "../action-types/user-actions"
+import { TUserActions } from '../actions/user'
 
-const initialState = {
+type TUserInfo = {
+    name: string;
+    email: string;
+}
+
+type TUserState = {
+    user: TUserInfo | null;
+
+    userRequest: boolean;
+    userFailed: boolean;
+
+    registerRequest: boolean;
+    registerFailed: boolean;
+
+    authRequest: boolean;
+    authFailed: boolean;
+
+    updateRequest: boolean;
+    updateFailed: boolean;
+
+    forgotPasswordRequest: boolean;
+    forgotPasswordFailed: boolean;
+    forgotPasswordSuccess: boolean;
+
+    resetPasswordRequest: boolean;
+    resetPasswordFailed: boolean;
+    resetPasswordSuccess: boolean;
+}
+
+const initialState: TUserState = {
     user: null,
 
     userRequest: false,
@@ -32,7 +62,7 @@ const initialState = {
     resetPasswordSuccess: false
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions): TUserState => {
     switch(action.type) {
         case REGISTER_USER_REQUEST: {
             return {

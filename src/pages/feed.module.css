@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    gap: 60px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.left, .right {
+    flex: 1
+}
+
+.left {
+    padding-left: 50px;
+    max-height: 840px;
+    overflow-y: scroll;
+}
+.order_status {
+    display: flex;
+    gap: 36px;
+}
+
+.status {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+}

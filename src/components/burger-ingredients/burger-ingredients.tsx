@@ -1,16 +1,15 @@
-import React, {useState, useEffect, FC} from "react";
+import React, {FC} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './burger-ingredients.module.css'
 import { Link, useLocation } from 'react-router-dom'
 import { useInView } from "react-intersection-observer";
-import { useSelector } from 'react-redux'
+import { useSelector } from "../../services/types/hooks";
 
 import Ingredient from "./ingredient";
 import { TIngredient } from "../../services/types/ingredients";
 
 const BurgerIngredients : FC = () => {
     const location = useLocation()
-    //@ts-ignore
     const {burgerIngredients, burgerIngredientsRequest, burgerIngredientsFailed} = useSelector((store) => store.burgerIngredients)
 
     const [refBun, inViewBun, entryBun] = useInView({threshold: 1});
@@ -35,7 +34,7 @@ const BurgerIngredients : FC = () => {
         return (<h1>Загрузка</h1>) 
     } else if (burgerIngredientsFailed) {
         return (<h1>Возникла ошибка, перезагрузите страницу</h1>)
-    } else{
+    } else {
     return (
         <section className={`${styles.wrapper} mb-10`}>
             <p className="text text_type_main-large mt-10 mb-5">Соберите бургер</p>
@@ -55,7 +54,7 @@ const BurgerIngredients : FC = () => {
                     <p className="text text_type_main-medium mb-6">Булки</p>
                     <ul className={`${styles.ingredients_section} ml-4 mb-10`}>
                         {
-                            burgerIngredients.map((item : TIngredient) => {
+                            burgerIngredients.map((item) => {
                                 if (item.type === 'bun') {
                                     return (
                                         <Link to={{pathname: `ingredients/${item._id}`, state: {background: location}}} className={styles.link} key={item._id}>
@@ -71,7 +70,7 @@ const BurgerIngredients : FC = () => {
                     <p className="text text_type_main-medium mb-6">Соусы</p>
                     <ul className={`${styles.ingredients_section} ml-4 mb-10`}>
                         {
-                            burgerIngredients.map((item : TIngredient) => {
+                            burgerIngredients.map((item) => {
                                 if (item.type === 'sauce') {
                                     return (
                                         <Link to={{pathname: `ingredients/${item._id}`, state: {background: location}}} className={styles.link} key={item._id}>
@@ -87,7 +86,7 @@ const BurgerIngredients : FC = () => {
                     <p className="text text_type_main-medium mb-6">Начинка</p>
                     <ul className={`${styles.ingredients_section} ml-4 mb-10`}>
                         {
-                            burgerIngredients.map((item : TIngredient) => {
+                            burgerIngredients.map((item) => {
                                 if (item.type === 'main') {
                                     return (
                                         <Link to={{pathname: `ingredients/${item._id}`, state: {background: location}}} className={styles.link} key={item._id}>

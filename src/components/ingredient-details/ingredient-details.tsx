@@ -1,20 +1,20 @@
 import React, {useEffect, FC} from 'react'
 import styles from './ingredient-details.module.css'
-import {useSelector, useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from '../../services/types/hooks'
 import { useParams } from 'react-router-dom'
-import { VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient'
+import { VIEW_CURRENT_INGREDIENT } from '../../services/action-types/current-ingredient-actions'
 
 const IngredientDetails : FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() 
     const { id } = useParams<{id?: string}>()
-    //@ts-ignore
     const data = useSelector((store) => store.burgerIngredients.burgerIngredients).find((item) => item._id === id)
     
     useEffect(() => {
-        dispatch({
-            type: VIEW_CURRENT_INGREDIENT,
-            item: data
-        })
+        if (data)
+            dispatch({
+                type: VIEW_CURRENT_INGREDIENT,
+                item: data
+            })
     }, [data])
     
     if (!data) {

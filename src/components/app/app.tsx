@@ -2,7 +2,8 @@ import React, { useEffect, FC } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../services/types/hooks';
 
 import styles from './app.module.css'
 import AppHeader from '../app-header/app-header'
@@ -17,17 +18,20 @@ import { ProtectedRoute } from '../protected-route';
 import NotFound404 from '../../pages/not-found-404';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
-import { STOP_VIEW_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
+import { STOP_VIEW_CURRENT_INGREDIENT } from '../../services/action-types/current-ingredient-actions';
 import { getIngredients } from '../../services/actions/burger-ingredients';
 
 import { Location } from 'history'; 
+import Feed from '../../pages/feed';
+import Order from '../../pages/order';
+import ProfileOrders from '../../pages/profile-orders';
 
 const App : FC = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    //@ts-ignore
     dispatch(getIngredients())
   }, [dispatch])
+
   return (
     <>
       <Router>
@@ -67,12 +71,11 @@ const ModalSwitch = () => {
 
   const back = () : void => {
     history.goBack();
-    //@ts-ignore
     dispatch({
       type: STOP_VIEW_CURRENT_INGREDIENT
     })
   };
-  
+
   return (
     <>
       <Switch location={background || location}>
@@ -84,11 +87,28 @@ const ModalSwitch = () => {
                 </DndProvider>
               </main>
         </Route>
-        <Route path="/ingredients/:id">
+
+        <Route path="/feed" exact={true}>
+          <Feed />
+        </Route>
+
+        <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails />
         </Route>
 
-        <Route path="*">
+        <Route path="/feed/:id" exact={true}>
+          <Order />
+        </Route>
+
+        <ProtectedRoute onlyForAuth={true} path="/profile/orders" exact={true}>
+            <ProfileOrders />
+          </ProtectedRoute>
+
+        <ProtectedRoute onlyForAuth={true} path="/profile/orders/:id" exact={true}>
+          <Order />
+        </ProtectedRoute>
+
+        <Route path="*" exact={true}>
             <NotFound404 />
           </Route>
       </Switch>
@@ -97,6 +117,22 @@ const ModalSwitch = () => {
         <Route path="/ingredients/:id"
           children={<Modal header={'Детали ингредиента'} onClose={back}>
                       <IngredientDetails />
+                    </Modal>}
+        />
+      }
+
+      {background && 
+        <Route path="/feed/:id"
+          children={<Modal header={null} onClose={back}>
+                      <Order />
+                    </Modal>}
+        />
+      }
+
+      {background && 
+        <ProtectedRoute onlyForAuth={true} path="/profile/orders/:id"
+          children={<Modal header={null} onClose={back}>
+                      <Order />
                     </Modal>}
         />
       }
