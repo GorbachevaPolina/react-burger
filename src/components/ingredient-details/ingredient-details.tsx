@@ -15,7 +15,7 @@ const IngredientDetails : FC = () => {
                 type: VIEW_CURRENT_INGREDIENT,
                 item: data
             })
-    }, [data])
+    }, [data, dispatch])
     
     if (!data) {
         return null

@@ -1,5 +1,6 @@
 import { userReducer, initialState } from "./user";
 import * as types from '../action-types/user-actions'
+import { email, name } from "../../utils/auth-test-data";
 
 describe('user reducer', () => {
     it('should return initial state', () => {
@@ -33,13 +34,13 @@ describe('user reducer', () => {
             registerRequest: true
         }, {
             type: types.REGISTER_USER_SUCCESS,
-            email: 'test@gmail.com',
-            name: 'test'
+            email,
+            name
         })).toEqual({
             ...initialState,
             user: {
-                email: 'test@gmail.com',
-                name: 'test'
+                email,
+                name
             }
         })
     })
@@ -71,13 +72,13 @@ describe('user reducer', () => {
             authRequest: true
         }, {
             type: types.AUTH_USER_SUCCESS,
-            email: 'test@gmail.com',
-            name: 'test'
+            email,
+            name
         })).toEqual({
             ...initialState,
             user: {
-                email: 'test@gmail.com',
-                name: 'test'
+                email,
+                name
             }
         })
     })
@@ -109,13 +110,13 @@ describe('user reducer', () => {
             userRequest: true
         }, {
             type: types.GET_USER_SUCCESS,
-            email: 'test@gmail.com',
-            name: 'test'
+            email,
+            name
         })).toEqual({
             ...initialState,
             user: {
-                email: 'test@gmail.com',
-                name: 'test'
+                email,
+                name
             }
         })
     })
@@ -147,13 +148,13 @@ describe('user reducer', () => {
             updateRequest: true
         }, {
             type: types.UPDATE_USER_INFO_SUCCESS,
-            email: 'test@gmail.com',
-            name: 'test'
+            email,
+            name
         })).toEqual({
             ...initialState,
             user: {
-                email: 'test@gmail.com',
-                name: 'test'
+                email,
+                name
             }
         })
     })

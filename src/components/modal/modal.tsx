@@ -26,7 +26,7 @@ const Modal : FC<TModalProps> = ({children, header, onClose}) => {
         return () => {
             window.removeEventListener('keydown', close)
         }
-    }, [])
+    }, [onClose])
 
     return ReactDOM.createPortal(
         <>

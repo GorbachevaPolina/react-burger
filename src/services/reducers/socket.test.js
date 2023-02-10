@@ -1,5 +1,6 @@
 import { wsReducer, initialState } from "./socket";
 import * as types from '../action-types/socket-actions'
+import { order } from "../../utils/order-test-data";
 
 describe('ws reducer', () => {
     it('should return initial state', () => {
@@ -44,49 +45,11 @@ describe('ws reducer', () => {
             wsConnected: true
         }, {
             type: types.WS_GET_MESSAGE,
-            payload: JSON.stringify({
-                "success": true,
-                "orders": [
-                  {
-                    "ingredients": [
-                      "60d3463f7034a000269f45e7",
-                      "60d3463f7034a000269f45e9",
-                      "60d3463f7034a000269f45e8",
-                      "60d3463f7034a000269f45ea"
-                    ],
-                    "_id": "",
-                    "status": "done",
-                    "number": 0,
-                    "createdAt": "2021-06-23T14:43:22.587Z",
-                    "updatedAt": "2021-06-23T14:43:22.603Z"
-                  }
-                ],
-                "total": 1,
-                "totalToday": 1
-              })
+            payload: JSON.stringify(order)
         })).toEqual({
             wsConnected: true,
             error: undefined,
-            messages: {
-                "success": true,
-                "orders": [
-                  {
-                    "ingredients": [
-                      "60d3463f7034a000269f45e7",
-                      "60d3463f7034a000269f45e9",
-                      "60d3463f7034a000269f45e8",
-                      "60d3463f7034a000269f45ea"
-                    ],
-                    "_id": "",
-                    "status": "done",
-                    "number": 0,
-                    "createdAt": "2021-06-23T14:43:22.587Z",
-                    "updatedAt": "2021-06-23T14:43:22.603Z"
-                  }
-                ],
-                "total": 1,
-                "totalToday": 1
-              } 
+            messages: order 
         })
     })
 })

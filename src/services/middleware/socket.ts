@@ -1,6 +1,6 @@
 import type { Middleware, MiddlewareAPI } from "redux";
 import { TWSActions } from "../actions/socket";
-import type { TApplicationActions, AppDispatch, RootState } from '../types/store'
+import type { AppDispatch, RootState } from '../types/store'
 import { TWS } from "../types/ws";
 
 const wsUrl = "wss://norma.nomoreparties.space/orders"

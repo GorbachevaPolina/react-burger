@@ -1,13 +1,16 @@
+import { testURL } from '../../src/utils/url'
+import { email, password } from '../../src/utils/auth-test-data'
+
 describe('make order', function() {
     before(() => {
-      cy.visit('http://localhost:3000/#/');
+      cy.visit(testURL);
       cy.viewport(1474, 762);
     });
 
     it("should drag ingredients", () => {
-        cy.visit("http://localhost:3000/#/login")
-        cy.get("[type=email]").type("polina@gmail.com")
-        cy.get("[type=password]").type("polinaqwerty")
+        cy.visit(`${testURL}login`)
+        cy.get("[type=email]").type(email)
+        cy.get("[type=password]").type(password)
         cy.get("button").click()
 
         cy.get("[data-testid=ingredient_card]").first().trigger("dragstart").trigger("dragleave");
@@ -31,7 +34,7 @@ describe('make order', function() {
 
 describe('ingredient modal', function() {
     before(() => {
-      cy.visit('http://localhost:3000');
+      cy.visit(testURL);
       cy.viewport(1474, 762)
     });
 

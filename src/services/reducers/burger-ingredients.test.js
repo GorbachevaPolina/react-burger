@@ -1,5 +1,6 @@
 import { burgerIngredientsReducer, initialState } from './burger-ingredients'
 import * as types from '../action-types/burger-ingredients-actions'
+import { main, bun } from '../../utils/ingredients-test-data'
 
 describe('ingredients reducer', () => {
     it('should return initial state', () => {
@@ -22,71 +23,19 @@ describe('ingredients reducer', () => {
         }, {
             type: types.GET_INGREDIENTS_SUCCESS,
             ingredients: [
-                {
-                    "_id":"60666c42cc7b410027a1a9b1",
-                    "name":"Краторная булка N-200i",
-                    "type":"bun",
-                    "proteins":80,
-                    "fat":24,
-                    "carbohydrates":53,
-                    "calories":420,
-                    "price":1255,
-                    "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    "__v":0
-                 },
-                 {
-                    "_id":"60666c42cc7b410027a1a9b5",
-                    "name":"Говяжий метеорит (отбивная)",
-                    "type":"main",
-                    "proteins":800,
-                    "fat":800,
-                    "carbohydrates":300,
-                    "calories":2674,
-                    "price":3000,
-                    "image":"https://code.s3.yandex.net/react/code/meat-04.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
-                    "__v":0
-                 }
+                bun,
+                main
             ]
         })).toEqual({
             burgerIngredientsRequest: false,
             burgerIngredientsFailed: false,
             burgerIngredients: [
-                {
-                    "_id":"60666c42cc7b410027a1a9b1",
-                    "name":"Краторная булка N-200i",
-                    "type":"bun",
-                    "proteins":80,
-                    "fat":24,
-                    "carbohydrates":53,
-                    "calories":420,
-                    "price":1255,
-                    "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    "__v":0
-                 },
-                 {
-                    "_id":"60666c42cc7b410027a1a9b5",
-                    "name":"Говяжий метеорит (отбивная)",
-                    "type":"main",
-                    "proteins":800,
-                    "fat":800,
-                    "carbohydrates":300,
-                    "calories":2674,
-                    "price":3000,
-                    "image":"https://code.s3.yandex.net/react/code/meat-04.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
-                    "__v":0
-                 }
+                bun,
+                main
             ],
             counter: {
-                "60666c42cc7b410027a1a9b1": 0,
-                "60666c42cc7b410027a1a9b5": 0
+                [bun._id]: 0,
+                [main._id]: 0
             }
         })
     })
@@ -107,77 +56,25 @@ describe('ingredients reducer', () => {
         expect(burgerIngredientsReducer({
             ...initialState,
             burgerIngredients: [
-                {
-                    "_id":"60666c42cc7b410027a1a9b1",
-                    "name":"Краторная булка N-200i",
-                    "type":"bun",
-                    "proteins":80,
-                    "fat":24,
-                    "carbohydrates":53,
-                    "calories":420,
-                    "price":1255,
-                    "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    "__v":0
-                 },
-                 {
-                    "_id":"60666c42cc7b410027a1a9b5",
-                    "name":"Говяжий метеорит (отбивная)",
-                    "type":"main",
-                    "proteins":800,
-                    "fat":800,
-                    "carbohydrates":300,
-                    "calories":2674,
-                    "price":3000,
-                    "image":"https://code.s3.yandex.net/react/code/meat-04.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
-                    "__v":0
-                 }
+                bun,
+                main
             ],
             counter: {
-                "60666c42cc7b410027a1a9b1": 0,
-                "60666c42cc7b410027a1a9b5": 0
+                [bun._id]: 0,
+                [main._id]: 0
             }
         }, {
             type: types.INCREASE_COUNTER,
-            id: "60666c42cc7b410027a1a9b5"
+            id: main._id
         })).toEqual({
             ...initialState,
             burgerIngredients: [
-                {
-                    "_id":"60666c42cc7b410027a1a9b1",
-                    "name":"Краторная булка N-200i",
-                    "type":"bun",
-                    "proteins":80,
-                    "fat":24,
-                    "carbohydrates":53,
-                    "calories":420,
-                    "price":1255,
-                    "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    "__v":0
-                 },
-                 {
-                    "_id":"60666c42cc7b410027a1a9b5",
-                    "name":"Говяжий метеорит (отбивная)",
-                    "type":"main",
-                    "proteins":800,
-                    "fat":800,
-                    "carbohydrates":300,
-                    "calories":2674,
-                    "price":3000,
-                    "image":"https://code.s3.yandex.net/react/code/meat-04.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
-                    "__v":0
-                 }
+                bun,
+                main
             ],
             counter: {
-                "60666c42cc7b410027a1a9b1": 0,
-                "60666c42cc7b410027a1a9b5": 1
+                [bun._id]: 0,
+                [main._id]: 1
             }
         })
     })
@@ -186,77 +83,25 @@ describe('ingredients reducer', () => {
         expect(burgerIngredientsReducer({
             ...initialState,
             burgerIngredients: [
-                {
-                    "_id":"60666c42cc7b410027a1a9b1",
-                    "name":"Краторная булка N-200i",
-                    "type":"bun",
-                    "proteins":80,
-                    "fat":24,
-                    "carbohydrates":53,
-                    "calories":420,
-                    "price":1255,
-                    "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    "__v":0
-                 },
-                 {
-                    "_id":"60666c42cc7b410027a1a9b5",
-                    "name":"Говяжий метеорит (отбивная)",
-                    "type":"main",
-                    "proteins":800,
-                    "fat":800,
-                    "carbohydrates":300,
-                    "calories":2674,
-                    "price":3000,
-                    "image":"https://code.s3.yandex.net/react/code/meat-04.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
-                    "__v":0
-                 }
+                bun,
+                main
             ],
             counter: {
-                "60666c42cc7b410027a1a9b1": 0,
-                "60666c42cc7b410027a1a9b5": 1
+                [bun._id]: 0,
+                [main._id]: 1
             }
         }, {
             type: types.DECREASE_COUNTER,
-            id: "60666c42cc7b410027a1a9b5"
+            id: main._id
         })).toEqual({
             ...initialState,
             burgerIngredients: [
-                {
-                    "_id":"60666c42cc7b410027a1a9b1",
-                    "name":"Краторная булка N-200i",
-                    "type":"bun",
-                    "proteins":80,
-                    "fat":24,
-                    "carbohydrates":53,
-                    "calories":420,
-                    "price":1255,
-                    "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    "__v":0
-                 },
-                 {
-                    "_id":"60666c42cc7b410027a1a9b5",
-                    "name":"Говяжий метеорит (отбивная)",
-                    "type":"main",
-                    "proteins":800,
-                    "fat":800,
-                    "carbohydrates":300,
-                    "calories":2674,
-                    "price":3000,
-                    "image":"https://code.s3.yandex.net/react/code/meat-04.png",
-                    "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-                    "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
-                    "__v":0
-                 }
+                bun,
+                main
             ],
             counter: {
-                "60666c42cc7b410027a1a9b1": 0,
-                "60666c42cc7b410027a1a9b5": 0
+                [bun._id]: 0,
+                [main._id]: 0
             }
         })
     })

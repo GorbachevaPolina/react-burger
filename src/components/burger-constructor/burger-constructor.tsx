@@ -87,7 +87,7 @@ const BurgerConstructor : FC = () => {
 
     useEffect(() => {
         dispatch(getUser())
-    }, [])
+    }, [dispatch])
     
     return ( 
         <section className={`${styles.wrapper} mt-25 mb-10 pl-4`} ref={ref} data-testid="constructor_drag_destination">

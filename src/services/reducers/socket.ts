@@ -1,5 +1,5 @@
 import { TWSActions } from "../actions/socket"
-import { TData, TOrder } from "../types/order";
+import { TData } from "../types/order";
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from '../action-types/socket-actions'
 
 type TWSState = {

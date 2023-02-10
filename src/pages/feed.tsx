@@ -1,6 +1,5 @@
 import React, {FC, useEffect} from 'react';
 import styles from './feed.module.css'
-import { TOrder } from '../services/types/order';
 import OrderCard from '../components/order-card/order-card';
 import { useDispatch, useSelector } from '../services/types/hooks';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/action-types/socket-actions';
@@ -15,7 +14,7 @@ const Feed: FC = () => {
         return () => {
             dispatch({ type: WS_CONNECTION_CLOSED })
         }
-    }, [])
+    }, [dispatch])
 
     if(error) {
         return <h1>Ошибка. Перезагрузите страницу</h1>

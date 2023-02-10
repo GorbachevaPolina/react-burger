@@ -28,7 +28,7 @@ const Order = () => {
             }
             getOrder(id)
         }
-    }, [])
+    }, [data, id, order])
 
     if (!data) {
         return null;
@@ -57,7 +57,7 @@ const Order = () => {
                         total += count * item.price;
                         return (
                             <li className={`${styles.ingredient} mb-4`} key={item._id}>
-                                <img src={item.image_mobile} className={styles.image}/>
+                                <img src={item.image_mobile} className={styles.image} alt="ingredient"/>
                                 <p className={`${styles.middle} text text_type_main-default`}>{item.name}</p>
                                 <p className='mr-6'>
                                     <span className="text text_type_digits-default">{count} x {item.price}</span>

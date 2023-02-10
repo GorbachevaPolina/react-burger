@@ -1,6 +1,5 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, useCallback } from "react";
 import { Route, Redirect, useLocation } from 'react-router-dom';
-// import { useDispatch, useSelector } from "react-redux";
 import { useSelector, useDispatch } from "../services/types/hooks";
 
 import { getUser } from '../services/actions/user'
@@ -17,14 +16,14 @@ export const ProtectedRoute : FC<TProtectedRouteProps> = ({ onlyForAuth, childre
     const [isUserLoaded, setUserLoaded] = useState<boolean>(false);
     const location = useLocation<{from: {pathname: string}}>()
 
-    const init = () => {
+    const init = useCallback(() => {
         dispatch(getUser());
         setUserLoaded(true);
-    }
+    }, [dispatch])
 
     useEffect(() => {
         init()
-    }, [])
+    }, [init])
 
     if (!isUserLoaded) {
         return null;
