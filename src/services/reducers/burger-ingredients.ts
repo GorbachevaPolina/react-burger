@@ -13,7 +13,7 @@ type TIngredientsState = {
     counter: TCounter | null
 }
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
     burgerIngredients: [],
     burgerIngredientsRequest: false,
     burgerIngredientsFailed: false,

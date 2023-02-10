@@ -1,19 +1,14 @@
-import { burgerConstructorReducer} from './burger-constructor'
+import { burgerConstructorReducer, initialState} from './burger-constructor'
 import * as types from '../action-types/burger-constructer-actions'
-
-const init = {
-    bun: null,
-    main: []
-}
 
 describe('constructor reducer', () => {
     it('should return initial state', () => {
-        expect(burgerConstructorReducer(undefined, {})).toEqual(init)
+        expect(burgerConstructorReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle ADD_CONSTRUCTOR_INGREDIENT', () => {
         expect(
-            burgerConstructorReducer(init, {
+            burgerConstructorReducer(initialState, {
                 type: types.ADD_CONSTRUCTOR_INGREDIENT,
                 item: {
                     "_id":"60666c42cc7b410027a1a9b5",
@@ -76,11 +71,11 @@ describe('constructor reducer', () => {
         }, {
             type: types.REMOVE_CONSTRUCTOR_INGREDIENT,
             constructor_id: '54e6fc0e-dd7b-4ee5-8718-25a040da4a41'
-        })).toEqual(init)
+        })).toEqual(initialState)
     })
 
     it('should handle ADD_BUN', () => {
-        expect(burgerConstructorReducer(init, {
+        expect(burgerConstructorReducer(initialState, {
             type: types.ADD_BUN,
             item: {
                 "_id":"60666c42cc7b410027a1a9b1",
@@ -134,6 +129,6 @@ describe('constructor reducer', () => {
                 main: []
             }, {
             type: types.REMOVE_BUN
-        })).toEqual(init)
+        })).toEqual(initialState)
     })
 })

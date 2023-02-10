@@ -1,51 +1,46 @@
-import { wsReducer } from "./socket";
+import { wsReducer, initialState } from "./socket";
 import * as types from '../action-types/socket-actions'
-
-const init = {
-    wsConnected: false,
-    messages: null
-}
 
 describe('ws reducer', () => {
     it('should return initial state', () => {
-        expect(wsReducer(undefined, {})).toEqual(init)
+        expect(wsReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle WS_CONNECTION_SUCCESS', () => {
-        expect(wsReducer(init, {
+        expect(wsReducer(initialState, {
             type: types.WS_CONNECTION_SUCCESS
         })).toEqual({
-            ...init,
+            ...initialState,
             error: undefined,
             wsConnected: true
         })
     })
 
     it('should handle WS_CONNECTION_ERROR', () => {
-        expect(wsReducer(init, {
+        expect(wsReducer(initialState, {
             type: types.WS_CONNECTION_ERROR,
             payload: "error"
         })).toEqual({
-            ...init,
+            ...initialState,
             error: 'error'
         })
     })
 
     it('should handle WS_CONNECTION_CLOSED', () => {
         expect(wsReducer({
-            ...init,
+            ...initialState,
             wsConnected: true
         }, {
             type: types.WS_CONNECTION_CLOSED
         })).toEqual({
-            ...init,
+            ...initialState,
             error: undefined
         })
     })
 
     it('should handle WS_GET_MESSAGE', () => {
         expect(wsReducer({
-            ...init,
+            ...initialState,
             wsConnected: true
         }, {
             type: types.WS_GET_MESSAGE,

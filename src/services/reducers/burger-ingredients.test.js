@@ -1,30 +1,23 @@
-import { burgerIngredientsReducer } from './burger-ingredients'
+import { burgerIngredientsReducer, initialState } from './burger-ingredients'
 import * as types from '../action-types/burger-ingredients-actions'
-
-const init = {
-    burgerIngredients: [],
-    burgerIngredientsRequest: false,
-    burgerIngredientsFailed: false,
-    counter: null
-}
 
 describe('ingredients reducer', () => {
     it('should return initial state', () => {
-        expect(burgerIngredientsReducer(undefined, {})).toEqual(init)
+        expect(burgerIngredientsReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle GET_INGREDIENTS_REQUEST', () => {
-        expect(burgerIngredientsReducer(init, {
+        expect(burgerIngredientsReducer(initialState, {
             type: types.GET_INGREDIENTS_REQUEST
         })).toEqual({
-            ...init,
+            ...initialState,
             burgerIngredientsRequest: true
         })
     })
 
     it('should handle GET_INGREDIENTS_SUCCESS', () => {
         expect(burgerIngredientsReducer({
-            ...init,
+            ...initialState,
             burgerIngredientsRequest: true
         }, {
             type: types.GET_INGREDIENTS_SUCCESS,
@@ -100,19 +93,19 @@ describe('ingredients reducer', () => {
 
     it('should handle GET_INGREDIENTS_FAILED', () => {
         expect(burgerIngredientsReducer({
-            ...init,
+            ...initialState,
             burgerIngredientsRequest: true
         }, {
             type: types.GET_INGREDIENTS_FAILED
         })).toEqual({
-            ...init,
+            ...initialState,
             burgerIngredientsFailed: true
         })
     })
 
     it('should handle INCREASE_COUNTER', () => {
         expect(burgerIngredientsReducer({
-            ...init,
+            ...initialState,
             burgerIngredients: [
                 {
                     "_id":"60666c42cc7b410027a1a9b1",
@@ -151,7 +144,7 @@ describe('ingredients reducer', () => {
             type: types.INCREASE_COUNTER,
             id: "60666c42cc7b410027a1a9b5"
         })).toEqual({
-            ...init,
+            ...initialState,
             burgerIngredients: [
                 {
                     "_id":"60666c42cc7b410027a1a9b1",
@@ -191,7 +184,7 @@ describe('ingredients reducer', () => {
 
     it('should handle DECREASE_COUNTER', () => {
         expect(burgerIngredientsReducer({
-            ...init,
+            ...initialState,
             burgerIngredients: [
                 {
                     "_id":"60666c42cc7b410027a1a9b1",
@@ -230,7 +223,7 @@ describe('ingredients reducer', () => {
             type: types.DECREASE_COUNTER,
             id: "60666c42cc7b410027a1a9b5"
         })).toEqual({
-            ...init,
+            ...initialState,
             burgerIngredients: [
                 {
                     "_id":"60666c42cc7b410027a1a9b1",

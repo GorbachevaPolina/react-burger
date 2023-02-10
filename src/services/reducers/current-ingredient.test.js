@@ -1,17 +1,13 @@
-import { currentIngredientReducer } from "./current-ingredient";
+import { currentIngredientReducer, initialState } from "./current-ingredient";
 import * as types from '../action-types/current-ingredient-actions'
-
-const init = {
-    currentIngredient: null
-}
 
 describe('current ingredient reducer', () => {
     it('should return initial state', () => {
-        expect(currentIngredientReducer(undefined, {})).toEqual(init)
+        expect(currentIngredientReducer(undefined, {})).toEqual(initialState)
     })
 
     it('should handle VIEW_CURRENT_INGREDIENT', () => {
-        expect(currentIngredientReducer(init, {
+        expect(currentIngredientReducer(initialState, {
             type: types.VIEW_CURRENT_INGREDIENT,
             item: {
                 "_id":"60666c42cc7b410027a1a9b1",
@@ -63,6 +59,6 @@ describe('current ingredient reducer', () => {
             }
         }, {
             type: types.STOP_VIEW_CURRENT_INGREDIENT
-        })).toEqual(init)
+        })).toEqual(initialState)
     })
 })

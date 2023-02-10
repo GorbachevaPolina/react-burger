@@ -1,11 +1,11 @@
 describe('make order', function() {
     before(() => {
-      cy.visit('http://localhost:3000');
+      cy.visit('http://localhost:3000/#/');
       cy.viewport(1474, 762);
     });
 
     it("should drag ingredients", () => {
-        cy.visit("http://localhost:3000/login")
+        cy.visit("http://localhost:3000/#/login")
         cy.get("[type=email]").type("polina@gmail.com")
         cy.get("[type=password]").type("polinaqwerty")
         cy.get("button").click()
