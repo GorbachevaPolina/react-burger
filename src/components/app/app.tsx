@@ -1,7 +1,7 @@
 import React, { useEffect, FC } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { BrowserRouter as Router, Route, Switch, useLocation, useHistory } from 'react-router-dom'
+import { BrowserRouter as Router, HashRouter, Route, Switch, useLocation, useHistory } from 'react-router-dom'
 // import { useDispatch } from 'react-redux'
 import { useDispatch } from '../../services/types/hooks';
 
@@ -34,7 +34,7 @@ const App : FC = () => {
 
   return (
     <>
-      <Router>
+      <HashRouter>
         <AppHeader />
         <Switch>
 
@@ -58,7 +58,7 @@ const App : FC = () => {
           <ModalSwitch />
         
         </Switch>
-      </Router>
+      </HashRouter>
     </>
   )
 }
