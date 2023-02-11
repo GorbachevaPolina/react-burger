@@ -21,7 +21,7 @@ const ProfileOrders: FC = () => {
       return () => {
         dispatch({ type: WS_CONNECTION_CLOSED })
     }
-    }, [])
+    }, [dispatch])
 
     if (!wsConnected || !messages) {
       return <h1>Загрузка</h1>

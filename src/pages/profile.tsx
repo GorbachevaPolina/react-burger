@@ -40,17 +40,17 @@ const Profile : FC = () => {
 
     useEffect(() => {
         if (user) {
-            setUserInfo({
-                ...userInfo,
+            setUserInfo(prevInfo => ({
+                ...prevInfo,
                 email: user.email,
                 name: user.name
-            })
+            }))
         }
     }, [user])
 
     useEffect(() => {
         dispatch(getUser())
-    }, [])
+    }, [dispatch])
 
     return (
         <div className={styles.container}>

@@ -17,7 +17,7 @@ const Ingredient : FC<TIngredientProps> = ({item}) => {
         item: { item: item }
     })
     return (
-        <li className={styles.ingredient_card} key={item._id} ref={ref}>
+        <li className={styles.ingredient_card} key={item._id} ref={ref} data-testid="ingredient_card">
             {counter ? <Counter count={counter} size="default" extraClass="m-1" /> : null}
             <img src={item.image} className="ml-4 mr-4 mb-1" alt={item.name}/>
             <p className="text text_type_digits-default mb-1">

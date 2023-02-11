@@ -26,12 +26,12 @@ const Modal : FC<TModalProps> = ({children, header, onClose}) => {
         return () => {
             window.removeEventListener('keydown', close)
         }
-    }, [])
+    }, [onClose])
 
     return ReactDOM.createPortal(
         <>
             <div className={`${styles.modal} p-10`}>
-                <div className={styles.modal_header}>
+                <div className={styles.modal_header} data-testid="modal_header">
                     <p className="text text_type_main-large">{header}</p>
                     <CloseIcon type="primary" onClick={onClose}/>
                 </div>
