@@ -1,6 +1,20 @@
 # Website link
 https://gorbachevapolina.github.io/react-burger/
 
+# About
+Online burger shop created for yandex practicum. 
+## Functionality 
+The user can register, login, change user information, reset password, make an order, view order history. The burger is created by dragging ingredients to the right side container. The status of the order can be monitored in "Лента заказов".
+## Technologies 
+* React 
+* Typescript
+* Redux
+* WebSocket
+* React DND
+* Testing libraries Jest and Cypress 
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
