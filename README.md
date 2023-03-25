@@ -1,13 +1,13 @@
 # Stellar Burgers
-Ссылка: https://gorbachevapolina.github.io/react-burger/
+Link: https://gorbachevapolina.github.io/react-burger/
 
-## Описание
-Онлайн сервис по заказу бургеров. Пользователь может зарегистрироваться, авторизоваться, изменить информацию в профиле, создать заказ, просматривать историю заказов. Бургер создается путем drag-and-drop. Статус заказа можно узнать во вкладке "Лента заказов".
+## Description
+Online service for ordering burgers. The user can register, login, change personal information in profile, create an order, monitor order history. The burger is created by dragging and dropping ingredients. The status of the order can be seen in "Лента заказов".
 
-## Технологии 
+## Technologies 
 * React 
 * Typescript
 * Redux
 * WebSocket
 * React DND
-* Библиотеки для тестирования Jest and Cypress 
+* Testing libraries Jest and Cypress 
